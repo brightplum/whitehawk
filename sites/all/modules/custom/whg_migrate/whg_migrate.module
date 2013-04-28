@@ -112,3 +112,19 @@ function whg_migrate_migrate_api() {
   );
   return $api;
 }
+
+/**
+ * Retrieve the new id from the old id
+ */
+function whg_migrate_get_new_id($class, $id) {
+  $query = db_select('migrate_map_' . $class, 'm')
+    ->fields('m', array('destid1'))
+    ->condition('m.sourceid1', $id, '=');
+  $result = $query->execute();
+  $output = '';
+  foreach ($result as $row) {
+    $output = $row->destid1;
+  }
+
+  return $output;
+}

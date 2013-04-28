@@ -40,7 +40,7 @@ class WHGUserActualMigration extends WHGUserMigration {
       'postal_code' => array('source_field' => 'field_zip'),
     );
     // Note that of the country field is NULL, none of the values will be migrated!
-    $this->addFieldMapping('field_user_address', 'field_country')->arguments($arguments);
+    $this->addFieldMapping('field_user_address', 'US')->arguments($arguments);
 
     $this->addFieldMapping(NULL, 'field_address_1');
     $this->addFieldMapping(NULL, 'field_address_2');
@@ -56,6 +56,56 @@ class WHGUserActualMigration extends WHGUserMigration {
       'field_membership:format',
       'field_publication:format',
       'field_active',
+      'field_country',
     ), t('Do Not Migrate'));
+  }
+
+  /**
+   * Prepare the rows going into the users.
+   *
+   * @param $current_row
+   * @return bool
+   */
+  public function prepareRow($current_row) {
+    $source_id = $current_row->uid;
+    $query = Database::getConnection('default', 'legacy')
+      ->select('users_roles', 'r')
+      ->fields('r', array('uid', 'rid'))
+      ->condition('r.uid', $source_id, '=');
+    $results = $query->execute();
+    // add the Authenticated role for everyone
+    $roles = array('2' => '2');
+    foreach ($results as $row) {
+      switch ($row->rid) {
+        // coach
+        case 3:
+          $rid = 9;
+          break;
+
+        // admin, super admin
+        case 5:
+        case 6:
+          $rid = 3;
+          break;
+
+        // case manager
+        case 7:
+          $rid = 10;
+          break;
+
+        // reviewer
+        case 9:
+          $rid = 11;
+          break;
+
+        default:
+          $rid = $row->rid;
+          break;
+      }
+      $roles[$rid] = $rid;
+    }
+    $current_row->roles = $roles;
+    return TRUE;
+    // return FALSE if you wish to skip a particular row
   }
 }

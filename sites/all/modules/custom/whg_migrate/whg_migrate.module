@@ -13,19 +13,6 @@ function whg_migrate_flush_caches() {
   whg_migrate_register_migrations();
 }
 
-function whg_migrate_menu() {
-  $items = array();
-
-  $items['test-query'] = array(
-    'title' => 'Test Query',
-    'page callback' => 'whg_migrate_test_query',
-    'access arguments' => array('administer nodes'),
-    'type' => MENU_CALLBACK,
-  );
-
-  return $items;
-}
-
 /**
  * Register all D6->D7 migrations.
  */
@@ -73,9 +60,6 @@ function whg_migrate_register_migrations() {
   Migration::registerMigration('WHGRecordMigration',
     $record_arguments['machine_name'], $record_arguments);
 
-  // Node migrations - each has its own class derived from the migrate_d2d class,
-  // specifying its particular field mappings and transformations. source_type
-  // and destination_type are required arguments.
   $node_arguments = $common_arguments + array(
     'class_name' => 'WHGCMRMigration',
     'description' => t('Migration of CMR nodes from Drupal 6'),
@@ -87,6 +71,14 @@ function whg_migrate_register_migrations() {
 
   Migration::registerMigration($node_arguments['class_name'],
     $node_arguments['machine_name'], $node_arguments);
+
+  $profile_arguments = $common_arguments + array(
+    'description' => t('Migration of member profile to user data'),
+    'machine_name' => 'WHGProfile',
+  );
+
+  Migration::registerMigration('WHGProfileMigration',
+    $profile_arguments['machine_name'], $profile_arguments);
 }
 
 /**
@@ -113,15 +105,4 @@ function whg_migrate_get_new_id($class, $id) {
   }
 
   return $output;
-}
-
-function whg_migrate_test_query() {
-  $cmr_row = Database::getConnection('default', 'legacy')
-    ->select('content_field_case', 'cfc')
-    ->fields('cfc', array('field_case_nid'));
-  $cmr_row->join('node', 'n', 'n.nid = cfc.field_case_nid');
-  $cmr_row->addField('n', array('nid'));
-  $cmr_row->join('content_type_record', 'ctr', 'ctr.nid = n.nid');
-  $cmr_row->addField('ctr', array('field_user_account_uid'));
-  $result = $cmr_row->execute()->fetchObject();
 }

@@ -23,7 +23,7 @@ class WHGUserActualMigration extends WHGUserMigration {
     $this->addFieldMapping('field_user_personal_email', 'field_personal_email');
     $this->addFieldMapping('field_user_coach_expertise', 'field_expertise');
     $this->addFieldMapping('field_user_coach_education', 'field_education');
-    $this->addFieldMapping('field_user_coach_membershp', 'field_membership');
+    $this->addFieldMapping('field_user_coach_membership', 'field_membership');
     $this->addFieldMapping('field_user_coach_publication', 'field_publication');
     $this->addFieldMapping('field_user_fax', 'field_fax');
     $this->addFieldMapping('field_user_alt_phone', 'field_alt_phone');
@@ -41,7 +41,6 @@ class WHGUserActualMigration extends WHGUserMigration {
     );
     // Note that of the country field is NULL, none of the values will be migrated!
     $this->addFieldMapping('field_user_address', 'US')->arguments($arguments);
-
     $this->addFieldMapping(NULL, 'field_address_1');
     $this->addFieldMapping(NULL, 'field_address_2');
     $this->addFieldMapping(NULL, 'field_city');

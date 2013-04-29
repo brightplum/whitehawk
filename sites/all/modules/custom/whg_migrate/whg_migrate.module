@@ -13,6 +13,19 @@ function whg_migrate_flush_caches() {
   whg_migrate_register_migrations();
 }
 
+function whg_migrate_menu() {
+  $items = array();
+
+  $items['test-query'] = array(
+    'title' => 'Test Query',
+    'page callback' => 'whg_migrate_test_query',
+    'access arguments' => array('administer nodes'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
 /**
  * Register all D6->D7 migrations.
  */
@@ -63,44 +76,17 @@ function whg_migrate_register_migrations() {
   // Node migrations - each has its own class derived from the migrate_d2d class,
   // specifying its particular field mappings and transformations. source_type
   // and destination_type are required arguments.
-  /*$node_arguments = array(
-    array(
-      'class_name' => 'ExampleArticleMigration',
-      'description' => t('Migration of article nodes from Drupal 6'),
-      'machine_name' => 'Article',
-      'source_type' => 'my_article',
-      'destination_type' => 'new_article',
-    ),
-  );
-  // Tell the node migrations where the users are coming from, so they can
-  // set up the dependency and resolve D6->D7 uids.
-  $common_node_arguments = $common_arguments + array(
-    'user_migration' => 'User',
-  );
-  foreach ($node_arguments as $arguments) {
-    $arguments = array_merge_recursive($arguments, $common_node_arguments);
-    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-                                 $arguments);
-  }
-
-  // Menu migrations -- same requirements as users
-  $menu_arguments = $common_arguments + array(
-    'description' => t('Migration of menus from Drupal 6'),
-    'machine_name' => 'Menu',
+  $node_arguments = $common_arguments + array(
+    'class_name' => 'WHGCMRMigration',
+    'description' => t('Migration of CMR nodes from Drupal 6'),
+    'machine_name' => 'WHGCMR',
+    'source_type' => 'case_management_report',
+    'destination_type' => 'cmr',
+    'user_migration' => 'WHGUser'
   );
 
-  // We just use the migrate_d2d D6 migration class as-is.
-  Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'],
-                               $menu_arguments);
-
-  // Menu links migrations -- basic requirements, plus must set up menu dependency
-  $menu_links_arguments = $common_arguments + array(
-    'description' => t('Migration of menu links from Drupal 6'),
-    'machine_name' => 'MenuLinks',
-    'menu_migration' => $menu_arguments['machine_name'],
-  );
-  Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'],
-                               $menu_links_arguments);*/
+  Migration::registerMigration($node_arguments['class_name'],
+    $node_arguments['machine_name'], $node_arguments);
 }
 
 /**
@@ -127,4 +113,15 @@ function whg_migrate_get_new_id($class, $id) {
   }
 
   return $output;
+}
+
+function whg_migrate_test_query() {
+  $cmr_row = Database::getConnection('default', 'legacy')
+    ->select('content_field_case', 'cfc')
+    ->fields('cfc', array('field_case_nid'));
+  $cmr_row->join('node', 'n', 'n.nid = cfc.field_case_nid');
+  $cmr_row->addField('n', array('nid'));
+  $cmr_row->join('content_type_record', 'ctr', 'ctr.nid = n.nid');
+  $cmr_row->addField('ctr', array('field_user_account_uid'));
+  $result = $cmr_row->execute()->fetchObject();
 }

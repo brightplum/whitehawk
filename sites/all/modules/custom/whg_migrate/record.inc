@@ -7,6 +7,8 @@ class WHGRecordMigration extends Migration {
     $this->description = t('Migrate record nodes to user data.');
     $this->dependencies = array('WHGUser');
 
+    $this->systemOfRecord = Migration::DESTINATION;
+
     $this->map = new MigrateSQLMap($this->machineName,
       array(
         'nid' => array(
@@ -25,12 +27,13 @@ class WHGRecordMigration extends Migration {
       ->fields('n', array('nid'))
       ->condition('n.type', 'record', '=')
       ->condition('n.status', 1, '=');
-    $query->join('whitehawkd6.content_type_record', 'ctr', 'n.nid = ctr.nid');
+    $query->join('content_type_record', 'ctr', 'n.nid = ctr.nid');
     $query->addField('ctr', 'field_client_level_value');
     $query->addField('ctr', 'field_user_account_uid');
     $query->addField('ctr', 'field_gender_value');
     $query->addField('ctr', 'field_language_preference_value');
-    $query->addField('ctr', 'field_follow_up_value');
+    $query->join('content_field_follow_up', 'cffu', 'n.nid = cffu.nid');
+    $query->addField('cffu', 'field_follow_up_value');
     $query->addField('ctr', 'field_follow_up_notes_value');
     $query->addField('ctr', 'field_company_value');
     $query->addField('ctr', 'field_worksheet_date_value');
@@ -43,14 +46,17 @@ class WHGRecordMigration extends Migration {
     $query->addField('ctr', 'field_department_value');
     $query->addField('ctr', 'field_supervisor_name_value');
     $query->addField('ctr', 'field_supervisor_title_value');
-    $query->addField('ctr', 'field_supervisor_email_value');
+    $query->addField('ctr', 'field_supervisor_email_email');
     $query->addField('ctr', 'field_supervisor_phone_value');
     $query->addField('ctr', 'field_client_id_legacy_value');
-    $query->addField('ctr', 'field_legacy_id_value');
+    $query->addField('ctr', 'field_coach_profile_nid');
+    $query->join('content_field_legacy_id', 'cfli', 'n.nid = cfli.nid');
+    $query->addField('cfli', 'field_legacy_id_value');
 
     // Add source fields which not queried in $query, will be populated in prepareRow()
     $source_fields = array(
       'ref_account_uid' => t('user reference on record'),
+      'ref_coach_uid' => t('coach user reference on record'),
     );
 
     // Create a MigrateSource object, which manages retrieving the input data.
@@ -59,6 +65,7 @@ class WHGRecordMigration extends Migration {
     $this->destination = new DrupalDestinationUser();
 
     $this->addFieldMapping('uid', 'ref_account_uid');
+    $this->addFieldMapping('field_user_coach', 'ref_coach_uid');
     $this->addFieldMapping('field_user_client_level', 'field_client_level_value');
     $this->addFieldMapping('field_user_client_id', 'nid');
     $this->addFieldMapping('field_user_gender', 'field_gender_value');
@@ -76,12 +83,13 @@ class WHGRecordMigration extends Migration {
     $this->addFieldMapping('field_user_department', 'field_department_value');
     $this->addFieldMapping('field_user_supervisor_name', 'field_supervisor_name_value');
     $this->addFieldMapping('field_user_supervisor_title', 'field_supervisor_title_value');
-    $this->addFieldMapping('field_user_supervisor_email', 'field_supervisor_email_value');
+    $this->addFieldMapping('field_user_supervisor_email', 'field_supervisor_email_email');
     $this->addFieldMapping('field_user_supervisor_phone', 'field_supervisor_phone_value');
     $this->addFieldMapping('field_user_client_id_legacy', 'field_client_id_legacy_value');
     $this->addFieldMapping('field_user_legacy_id', 'field_legacy_id_value');
 
     $this->addUnmigratedDestinations(array(
+      'is_new',
       'mail',
       'name',
       'pass',
@@ -115,6 +123,26 @@ class WHGRecordMigration extends Migration {
 
   public function prepareRow($current_row) {
     $current_row->ref_account_uid = whg_migrate_get_new_id('whguser', $current_row->field_user_account_uid);
+
+    $ctr = Database::getConnection('default', 'legacy')
+      ->select('content_type_record', 'ctr')
+      ->fields('ctr', array('field_coach_profile_nid'))
+      ->condition('ctr.nid', $current_row->nid)
+      ->execute()->fetchObject();
+    if ($ctr) {
+      $node = Database::getConnection('default', 'legacy')
+        ->select('node', 'n')
+        ->fields('n', array('uid'))
+        ->condition('n.nid', $ctr->field_coach_profile_nid)
+        ->execute()->fetchObject();
+      if ($node && !empty($node->uid)) {
+        $current_row->ref_coach_uid = whg_migrate_get_new_id('whguser', $node->uid);
+      }
+      else {
+        $this->saveMessage(t('No user account in record data for cmr node with nid !nid',
+          array('!nid' => $ctr->field_coach_profile_nid)));
+      }
+    }
     return TRUE;
   }
 }

@@ -9,24 +9,37 @@ abstract class WHGNodeMigration extends DrupalNode6Migration {
   }
 }
 
-class WHGNodeActualMigration extends WHGNodeMigration {
+class WHGCMRMigration extends WHGNodeMigration {
   public function __construct(array $arguments) {
-    // Add any other data we're pulling into the source row, before the parent
-    // constructor.
-    $this->sourceFields['lead_graphic'] = 'Lead graphic string from D6';
-    $this->sourceFields['summary'] = 'Summary string from D6';
+    $this->sourceFields['ref_record_uid'] = 'Referenced user record uid';
 
     parent::__construct($arguments);
 
-    $this->addFieldMapping('field_image', 'field_lead_graphic')
-         ->sourceMigration('Image');
-    // Note that we map migrated terms by the vocabulary ID.
-    $this->addFieldMapping('field_countries', '1')
-         ->sourceMigration('Countries')
-         ->arguments(array('source_type' => 'tid'));
-    $this->addFieldMapping('field_topics', '2')
-         ->sourceMigration('Topics')
-         ->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_cmr_final', 'field_final');
+    $this->addFieldMapping('field_cmr_last_contact', 'field_last_contact');
+    $this->addFieldMapping('field_cmr_status_code', 'field_status_code');
+    $this->addFieldMapping('field_cmr_phase', 'field_phase');
+    $this->addFieldMapping('field_cmr_service_fee', 'field_service_fee');
+    $this->addFieldMapping('field_cmr_hours', 'field_hours');
+    $this->addFieldMapping('field_cmr_remarks', 'field_remarks');
+    $this->addFieldMapping('field_cmr_inactivation_date', 'field_inactivation_date');
+    $this->addFieldMapping('field_cmr_service_started', 'field_service_started');
+    $this->addFieldMapping('field_cmr_computed_into_record', 'field_computed_into_record');
+    $this->addFieldMapping('field_cmr_d6_record', 'field_case');
+    $this->addFieldMapping('field_cmr_associated_record', 'ref_record_uid');
+
+    $this->addUnmigratedSources(
+      array(
+        'field_remarks:format',
+        'field_report_date',
+      )
+    );
+
+    $this->addUnmigratedDestinations(
+      array(
+        'field_cmr_remarks:language',
+      )
+    );
   }
 
   /**
@@ -41,19 +54,25 @@ class WHGNodeActualMigration extends WHGNodeMigration {
       return FALSE;
     }
 
-    $image_row = Database::getConnection('default', $this->sourceConnection)
-      ->select('custom_image_table', 'i')
-      ->fields('i', array('copyright', 'filename'))
-      ->condition('vid', $row->vid)
-      ->execute()
-      ->fetchObject();
-    if ($image_row) {
-      $row->copyright = $image_row->copyright;
-      $row->filename = $image_row->filename;
+    $cfc = Database::getConnection('default', 'legacy')
+      ->select('content_field_case', 'cfc')
+      ->fields('cfc', array('field_case_nid'))
+      ->condition('cfc.nid', $row->nid)
+      ->execute()->fetchObject();
+    if ($cfc) {
+      $ctr = Database::getConnection('default', 'legacy')
+        ->select('content_type_record', 'ctr')
+        ->fields('ctr', array('field_user_account_uid'))
+        ->condition('ctr.nid', $cfc->field_case_nid)
+        ->execute()->fetchObject();
+      if ($ctr && !empty($ctr->field_user_account_uid)) {
+        $row->ref_record_uid = whg_migrate_get_new_id('whguser', $ctr->field_user_account_uid);
+      }
+      else {
+        $this->saveMessage(t('No user account in record data for cmr node with nid !nid',
+          array('!nid' => $cfc->field_case_nid)));
+      }
     }
-    else {
-      $this->saveMessage(t('No custom_image_table data for image node with vid !vid',
-        array('!vid' => $row->vid)));
-    }
+    return TRUE;
   }
 }

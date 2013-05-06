@@ -71,6 +71,73 @@ function whg_features_field_default_fields() {
     ),
   );
 
+  // Exported field: 'bean-freetext-field_page_pdf'.
+  $fields['bean-freetext-field_page_pdf'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_page_pdf',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 1,
+        'display_field' => 1,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'freetext',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => 1,
+        ),
+      ),
+      'entity_type' => 'bean',
+      'field_name' => 'field_page_pdf',
+      'label' => 'PDF Files',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 1,
+        'file_directory' => '',
+        'file_extensions' => 'txt doc pdf',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '-2',
+      ),
+    ),
+  );
+
   // Exported field: 'node-page-body'.
   $fields['node-page-body'] = array(
     'field_config' => array(
@@ -172,14 +239,16 @@ function whg_features_field_default_fields() {
           'bean' => 'bean',
           'block' => 0,
           'comment' => 0,
-          'menu' => 0,
+          'menu' => 'menu',
           'node' => 0,
           'search' => 0,
           'shortcut' => 0,
           'system' => 0,
           'user' => 0,
+          'webform' => 0,
+          'whg_features' => 'whg_features',
         ),
-        'referenceable_operator' => 'AND',
+        'referenceable_operator' => 'OR',
         'referenceable_regions' => array(
           '' => 0,
           'closure' => 0,
@@ -295,7 +364,7 @@ function whg_features_field_default_fields() {
       'entity_type' => 'node',
       'field_name' => 'field_main_nav',
       'label' => 'Show Top Navigation',
-      'required' => 1,
+      'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
@@ -305,6 +374,79 @@ function whg_features_field_default_fields() {
         'settings' => array(),
         'type' => 'options_buttons',
         'weight' => '1',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-page-field_page_pdf'.
+  $fields['node-page-field_page_pdf'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_page_pdf',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 1,
+        'display_field' => 1,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'page',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => 5,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_page_pdf',
+      'label' => 'PDF Files',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 1,
+        'file_directory' => 'pdf',
+        'file_extensions' => 'txt doc pdf',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '6',
       ),
     ),
   );
@@ -361,7 +503,7 @@ function whg_features_field_default_fields() {
       'entity_type' => 'node',
       'field_name' => 'field_privacy',
       'label' => 'Privacy',
-      'required' => 1,
+      'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
@@ -403,14 +545,14 @@ function whg_features_field_default_fields() {
           'bean' => 'bean',
           'block' => 0,
           'comment' => 0,
-          'menu' => 0,
+          'menu' => 'menu',
           'node' => 0,
           'search' => 0,
           'shortcut' => 0,
           'system' => 0,
           'user' => 0,
         ),
-        'referenceable_operator' => 'AND',
+        'referenceable_operator' => 'OR',
         'referenceable_regions' => array(
           '' => 0,
           'closure' => 0,
@@ -479,6 +621,7 @@ function whg_features_field_default_fields() {
   t('Body');
   t('Content');
   t('Left Sidebar');
+  t('PDF Files');
   t('Privacy');
   t('Right Sidebar');
   t('Show Top Navigation');

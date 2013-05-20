@@ -60,6 +60,14 @@ function whg_migrate_register_migrations() {
   Migration::registerMigration('WHGRecordMigration',
     $record_arguments['machine_name'], $record_arguments);
 
+  $name_arguments = $common_arguments + array(
+    'description' => t('Migration of name, legacy record to user data'),
+    'machine_name' => 'WHGName',
+  );
+
+  Migration::registerMigration('WHGNameMigration',
+    $name_arguments['machine_name'], $name_arguments);
+
   $node_arguments = $common_arguments + array(
     'class_name' => 'WHGCMRMigration',
     'description' => t('Migration of CMR nodes from Drupal 6'),

@@ -11,3 +11,4 @@ files[] = node.inc
 files[] = user.inc
 files[] = record.inc
 files[] = profile.inc
+files[] = name.inc

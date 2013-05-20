@@ -50,12 +50,12 @@ class WHGRecordMigration extends Migration {
     $query->addField('ctr', 'field_supervisor_phone_value');
     $query->addField('ctr', 'field_client_id_legacy_value');
     $query->addField('ctr', 'field_coach_profile_nid');
-    $query->join('content_field_legacy_id', 'cfli', 'n.nid = cfli.nid');
+    /*$query->join('content_field_legacy_id', 'cfli', 'n.nid = cfli.nid');
     $query->addField('cfli', 'field_legacy_id_value');
     $query->join('content_field_lname', 'cfln', 'n.nid = cfln.nid');
     $query->addField('cfln', 'field_lname_value');
     $query->join('content_field_fname', 'cffn', 'n.nid = cffn.nid');
-    $query->addField('cffn', 'field_fname_value');
+    $query->addField('cffn', 'field_fname_value');*/
 
     // Add source fields which not queried in $query, will be populated in prepareRow()
     $source_fields = array(
@@ -70,8 +70,8 @@ class WHGRecordMigration extends Migration {
 
     $this->addFieldMapping('uid', 'ref_account_uid');
     $this->addFieldMapping('field_user_coach', 'ref_coach_uid');
-    $this->addFieldMapping('field_user_firstname', 'field_fname_value');
-    $this->addFieldMapping('field_user_lastname', 'field_lname_value');
+    //$this->addFieldMapping('field_user_firstname', 'field_fname_value');
+    //$this->addFieldMapping('field_user_lastname', 'field_lname_value');
     $this->addFieldMapping('field_user_client_level', 'field_client_level_value');
     $this->addFieldMapping('field_user_client_id', 'nid');
     $this->addFieldMapping('field_user_gender', 'field_gender_value');
@@ -92,7 +92,7 @@ class WHGRecordMigration extends Migration {
     $this->addFieldMapping('field_user_supervisor_email', 'field_supervisor_email_email');
     $this->addFieldMapping('field_user_supervisor_phone', 'field_supervisor_phone_value');
     $this->addFieldMapping('field_user_client_id_legacy', 'field_client_id_legacy_value');
-    $this->addFieldMapping('field_user_legacy_id', 'field_legacy_id_value');
+    //$this->addFieldMapping('field_user_legacy_id', 'field_legacy_id_value');
 
     $this->addUnmigratedDestinations(array(
       'is_new',

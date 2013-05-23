@@ -50,12 +50,6 @@ class WHGRecordMigration extends Migration {
     $query->addField('ctr', 'field_supervisor_phone_value');
     $query->addField('ctr', 'field_client_id_legacy_value');
     $query->addField('ctr', 'field_coach_profile_nid');
-    /*$query->join('content_field_legacy_id', 'cfli', 'n.nid = cfli.nid');
-    $query->addField('cfli', 'field_legacy_id_value');
-    $query->join('content_field_lname', 'cfln', 'n.nid = cfln.nid');
-    $query->addField('cfln', 'field_lname_value');
-    $query->join('content_field_fname', 'cffn', 'n.nid = cffn.nid');
-    $query->addField('cffn', 'field_fname_value');*/
 
     // Add source fields which not queried in $query, will be populated in prepareRow()
     $source_fields = array(
@@ -70,8 +64,6 @@ class WHGRecordMigration extends Migration {
 
     $this->addFieldMapping('uid', 'ref_account_uid');
     $this->addFieldMapping('field_user_coach', 'ref_coach_uid');
-    //$this->addFieldMapping('field_user_firstname', 'field_fname_value');
-    //$this->addFieldMapping('field_user_lastname', 'field_lname_value');
     $this->addFieldMapping('field_user_client_level', 'field_client_level_value');
     $this->addFieldMapping('field_user_client_id', 'nid');
     $this->addFieldMapping('field_user_gender', 'field_gender_value');
@@ -92,7 +84,6 @@ class WHGRecordMigration extends Migration {
     $this->addFieldMapping('field_user_supervisor_email', 'field_supervisor_email_email');
     $this->addFieldMapping('field_user_supervisor_phone', 'field_supervisor_phone_value');
     $this->addFieldMapping('field_user_client_id_legacy', 'field_client_id_legacy_value');
-    //$this->addFieldMapping('field_user_legacy_id', 'field_legacy_id_value');
 
     $this->addUnmigratedDestinations(array(
       'is_new',
@@ -117,13 +108,39 @@ class WHGRecordMigration extends Migration {
       'pathauto',
       'field_user_language:language',
       'field_user_follow_up_notes:language',
-      'field_user_company:language',
       'field_user_client_eid:language',
       'field_user_region:language',
       'field_user_department:language',
       'field_user_supervisor_name:language',
       'field_user_supervisor_title:language',
       'field_user_supervisor_phone:language',
+      'field_user_firstname',
+      'field_user_firstname:language',
+      'field_user_lastname',
+      'field_user_lastname:language',
+      'field_user_address',
+      'field_user_phone',
+      'field_user_phone:language',
+      'field_user_coach_designation',
+      'field_user_coach_designation:language',
+      'field_user_coach_biography',
+      'field_user_coach_biography:format',
+      'field_user_coach_biography:language',
+      'field_user_coach_experience',
+      'field_user_coach_experience:format',
+      'field_user_coach_experience:language',
+      'field_user_coach_expertise',
+      'field_user_coach_expertise:format',
+      'field_user_coach_expertise:language',
+      'field_user_coach_education',
+      'field_user_coach_education:language',
+      'field_user_coach_education:format',
+      'field_user_coach_publication',
+      'field_user_coach_publication:format',
+      'field_user_coach_publication:language',
+      'field_user_coach_membership',
+      'field_user_coach_membership:language',
+      'field_user_coach_membership:format',
     ), t('Do Not Migrate'));
   }
 

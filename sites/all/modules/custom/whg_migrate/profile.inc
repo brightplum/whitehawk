@@ -92,7 +92,7 @@ class WHGProfileMigration extends Migration {
       'postal_code' => array('source_field' => 'field_zip_value'),
     );
     // Note that of the country field is NULL, none of the values will be migrated!
-    $this->addFieldMapping('field_user_address', 'US')->arguments($arguments);
+    $this->addFieldMapping('field_user_address', 'src_country')->arguments($arguments);
     $this->addFieldMapping(NULL, 'field_address_1_value');
     $this->addFieldMapping(NULL, 'field_address_2_value');
     $this->addFieldMapping(NULL, 'field_city_value');
@@ -134,6 +134,7 @@ class WHGProfileMigration extends Migration {
 
   public function prepareRow($current_row) {
     $current_row->ref_account_uid = whg_migrate_get_new_id('whguser', $current_row->uid);
+    $current_row->src_country = array("US");
     return TRUE;
   }
 }

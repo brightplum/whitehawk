@@ -23,7 +23,7 @@ class WHGUserActualMigration extends WHGUserMigration {
     $this->addFieldMapping('field_user_personal_email', 'field_personal_email');
     $this->addFieldMapping('field_user_coach_expertise', 'field_expertise');
     $this->addFieldMapping('field_user_coach_education', 'field_education');
-    $this->addFieldMapping('field_user_coach_membershp', 'field_membership');
+    $this->addFieldMapping('field_user_coach_membership', 'field_membership');
     $this->addFieldMapping('field_user_coach_publication', 'field_publication');
     $this->addFieldMapping('field_user_fax', 'field_fax');
     $this->addFieldMapping('field_user_alt_phone', 'field_alt_phone');
@@ -33,14 +33,14 @@ class WHGUserActualMigration extends WHGUserMigration {
 
     // Address field.
     $arguments = array(
-      'thoroughfare' => array('source_field' => 'field_address_1'),
-      'premise' => array('source_field' => 'field_address_2'),
-      'locality' => array('source_field' => 'field_city'),
-      'administrative_area' => array('source_field' => 'field_state'),
-      'postal_code' => array('source_field' => 'field_zip'),
+      'thoroughfare' => array('source_field' => 'field_address_1_value'),
+      'premise' => array('source_field' => 'field_address_2_value'),
+      'locality' => array('source_field' => 'field_city_value'),
+      'administrative_area' => array('source_field' => 'field_state_value'),
+      'postal_code' => array('source_field' => 'field_zip_value'),
     );
     // Note that of the country field is NULL, none of the values will be migrated!
-    $this->addFieldMapping('field_user_address', 'US')->arguments($arguments);
+    $this->addFieldMapping('field_user_address', 'src_country')->arguments($arguments);
     $this->addFieldMapping(NULL, 'field_address_1');
     $this->addFieldMapping(NULL, 'field_address_2');
     $this->addFieldMapping(NULL, 'field_city');
@@ -104,6 +104,44 @@ class WHGUserActualMigration extends WHGUserMigration {
       $roles[$rid] = $rid;
     }
     $current_row->roles = $roles;
+
+    $address_fields = array(
+      'content_field_address_1' => 'field_address_1_value',
+      'content_field_address_2' => 'field_address_2_value',
+      'content_field_country' => 'field_country_value',
+      'content_field_city' => 'field_city_value',
+      'content_field_state' => 'field_state_value',
+      'content_field_zip' => 'field_zip_value',
+    );
+
+    foreach ($address_fields as $table => $field) {
+      $ctr = Database::getConnection('default', 'legacy')
+        ->select('content_type_record', 'ctr')
+        ->fields('ctr', array('nid'))
+        ->condition('ctr.field_user_account_uid', $current_row->uid)
+        ->execute()->fetchObject();
+      if ($ctr) {
+        $table_value = Database::getConnection('default', 'legacy')
+          ->select($table, 'tprefix')
+          ->fields('tprefix', array($field))
+          ->condition('tprefix.nid', $ctr->nid)
+          ->execute()->fetchObject();
+        if ($table_value && isset($table_value->$field)) {
+          $current_row->$field = $table_value->$field;
+          if ($field == 'field_country_value') {
+            $country = substr($table_value->$field, 0, 2);
+            $current_row->src_country = array($country);
+          }
+        }
+        else {
+          $current_row->$field = NULL;
+        }
+      }
+      else {
+        $current_row->$field = NULL;
+      }
+    }
+
     return TRUE;
     // return FALSE if you wish to skip a particular row
   }

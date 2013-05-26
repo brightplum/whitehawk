@@ -154,6 +154,8 @@ function whg_features_crc_nav_accordion_block() {
 
 /**
  * Implements hook_FORM_ID_form_alter().
+ *
+ * Alter page nodes.
  */
 function whg_features_form_page_node_form_alter(&$form, &$form_state, $form_id) {
   $parameters = drupal_get_query_parameters();
@@ -179,6 +181,23 @@ function whg_features_form_page_node_form_alter(&$form, &$form_state, $form_id) 
       }
     }
   }
+}
+
+/**
+ * Alter the date_combo element after the Date module is finished with it.
+ *
+ * @param array $element
+ *   The $element array.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ * @param array $context
+ *   An associative array containing the following keys:
+ *   - field: The $field array.
+ *   - instance: The $instance array.
+ *   - form: Nested array of form elements that comprise the form.
+ */
+function whg_features_date_combo_process_alter(&$element, &$form_state, $context) {
+  $element['value']['#date_format'] = 'm/d/Y';
 }
 
 /**

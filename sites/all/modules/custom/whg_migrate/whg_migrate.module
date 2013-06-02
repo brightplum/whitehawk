@@ -80,6 +80,18 @@ function whg_migrate_register_migrations() {
   Migration::registerMigration($node_arguments['class_name'],
     $node_arguments['machine_name'], $node_arguments);
 
+  $fee_arguments = $common_arguments + array(
+    'class_name' => 'WHGFeesMigration',
+    'description' => t('Migration of Non-Coaching Fee nodes from Drupal 6'),
+    'machine_name' => 'WHGFees',
+    'source_type' => 'non_coaching_fees',
+    'destination_type' => 'non_coaching_fees',
+    'user_migration' => 'WHGUser'
+  );
+
+  Migration::registerMigration($fee_arguments['class_name'],
+    $fee_arguments['machine_name'], $fee_arguments);
+
   $profile_arguments = $common_arguments + array(
     'description' => t('Migration of member profile to user data'),
     'machine_name' => 'WHGProfile',

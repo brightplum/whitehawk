@@ -9,7 +9,6 @@ class WHGFeesMigration extends WHGNodeMigration {
         $this->addFieldMapping('field_ncf_coaching_fee_amount', 'field_non_coaching_fee_amount');
         $this->addFieldMapping('field_ncf_remarks', 'field_remarks');
         $this->addFieldMapping('field_ncf_date_of_service', 'field_service_date');
-        $this->addFieldMapping('field_ncf_d6_record', 'field_case');
         $this->addFieldMapping('field_ncf_associated_record', 'ref_record_uid');
 
     }

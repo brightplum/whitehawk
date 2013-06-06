@@ -8,6 +8,30 @@ include_once 'whg_features.features.inc';
 define('WHG_PASS', crypt('thewhitehawkgroup', 'salt+deni+dan'));
 
 /**
+ * Implements hook_init().
+ */
+function whg_features_init() {
+    if (!user_is_anonymous()) {
+        global $user;
+        $path = menu_get_item();
+
+        // hide non active dashboard panels
+        if ($path['path'] == 'admin/dashboard') {
+            if (!in_array('Case Manager', $user->roles)) {
+                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_case_manager.css');
+            }
+            if (!in_array('Coach', $user->roles)) {
+                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_coach.css');
+            }
+            if (!in_array('administrator', $user->roles)) {
+                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_admin.css');
+            }
+        }
+    }
+
+}
+
+/**
  * Implements hook_menu().
  */
 function whg_features_menu() {
@@ -50,7 +74,7 @@ function whg_features_permission() {
  */
 function whg_features_admin_paths() {
   $paths = array(
-    'choose-page-type' => TRUE,
+    'choose-page-type' => true,
   );
   return $paths;
 }
@@ -121,8 +145,8 @@ function whg_features_crc_nav_accordion_block() {
       // If in active trail, set opener open.
       $active = (isset($item['#attributes']['class']) && in_array('active-trail', $item['#attributes']['class']))
         ? ' default-open'
-        : NULL;
-      $open = (isset($active)) ? ' ui-state-active' : NULL;
+        : null;
+      $open = (isset($active)) ? ' ui-state-active' : null;
       $output .= '<li><a href="' . drupal_get_path_alias($item['#href']) . '" class="opener' . $open . '"><strong>' . $item['#title'] . '</strong></a>';
       if (!empty($item['#below'])) {
         $parameters = drupal_get_query_parameters();
@@ -140,14 +164,14 @@ function whg_features_crc_nav_accordion_block() {
         }
         $output .= '<div class="slide-holder' . $active . '">
               <div class="slide">';
-        $output .= (!empty($item['#below'])) ? drupal_render($item['#below']) : NULL;
+        $output .= (!empty($item['#below'])) ? drupal_render($item['#below']) : null;
         $output .= '</div></div>';
       }
       $output .= '</li>';
     }
   }
   $content = '<ul class="accordion">' . $output . '</ul>';
-  $data['subject'] = NULL;
+  $data['subject'] = null;
   $data['content'] = $content;
   return $data;
 }
@@ -167,20 +191,31 @@ function whg_features_form_page_node_form_alter(&$form, &$form_state, $form_id) 
       switch ($parameters['page-type']) {
         case 'public':
           $form['field_privacy'][LANGUAGE_NONE]['#default_value'] = 1;
-          $form['field_privacy']['#disabled'] = TRUE;
+          $form['field_privacy']['#disabled'] = true;
           $form['field_main_nav'][LANGUAGE_NONE]['#default_value'] = 1;
-          $form['field_main_nav']['#disabled'] = TRUE;
+          $form['field_main_nav']['#disabled'] = true;
           break;
 
         case 'crc':
           $form['field_privacy'][LANGUAGE_NONE]['#default_value'] = 0;
-          $form['field_privacy']['#disabled'] = TRUE;
+          $form['field_privacy']['#disabled'] = true;
           $form['field_main_nav'][LANGUAGE_NONE]['#default_value'] = 0;
-          $form['field_main_nav']['#disabled'] = TRUE;
+          $form['field_main_nav']['#disabled'] = true;
           break;
       }
     }
   }
+}
+
+function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+    dpm($form);
+    if (!user_access('administer site configuration')) {
+        $form['account']['name']['#disabled'] = true;
+        $form['account']['status']['#disabled'] = true;
+        $form['account']['roles']['#disabled'] = true;
+        $form['field_user_client_id']['#disabled'] = true;
+        $form['field_user_coach']['#disabled'] = true;
+    }
 }
 
 /**
@@ -254,14 +289,14 @@ function whg_features_theme($existing, $type, $theme, $path) {
  * @return bool
  */
 function whg_features_salt($phrase) {
-  return (WHG_PASS == $phrase) ? TRUE : NULL;
+  return (WHG_PASS == $phrase) ? true : null;
 }
 
 /**
  * Check if bypass conditions are met.
  */
 function whg_features_check_bypass() {
-  $key = NULL;
+  $key = null;
   $parameters = drupal_get_query_parameters();
   if (isset($parameters['auth'])) {
     $key = whg_features_salt($parameters['auth']);

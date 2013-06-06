@@ -15,16 +15,18 @@ function whg_features_init() {
         global $user;
         $path = menu_get_item();
 
-        // hide non active dashboard panels
-        if ($path['path'] == 'admin/dashboard') {
-            if (!in_array('Case Manager', $user->roles)) {
-                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_case_manager.css');
-            }
-            if (!in_array('Coach', $user->roles)) {
-                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_coach.css');
-            }
-            if (!in_array('administrator', $user->roles)) {
-                drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_admin.css');
+        if (!user_access('administer site configuration')) {
+            // hide non active dashboard panels
+            if ($path['path'] == 'admin/dashboard') {
+                if (!in_array('Case Manager', $user->roles)) {
+                    drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_case_manager.css');
+                }
+                if (!in_array('Coach', $user->roles)) {
+                    drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_coach.css');
+                }
+                if (!in_array('administrator', $user->roles)) {
+                    drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_admin.css');
+                }
             }
         }
     }
@@ -84,6 +86,11 @@ function whg_features_admin_paths() {
  *
  * @param object $node
  *   The node object.
+ *
+ * @param $op
+ * @param $account
+ *
+ * @return mixed
  */
 function whg_features_node_access($node, $op, $account) {
   $access = NODE_ACCESS_IGNORE;
@@ -207,14 +214,62 @@ function whg_features_form_page_node_form_alter(&$form, &$form_state, $form_id) 
   }
 }
 
+/**
+ * Implements hook_form_cmr_node_form_alter().
+ *
+ * @param $form
+ * @param $form_state
+ */
+function whg_features_form_cmr_node_form_alter(&$form, &$form_state) {
+    $params = drupal_get_query_parameters();
+    $properties = (isset($params['destination'])) ? explode('/', $params['destination']) : null;
+    if (isset($properties) && is_numeric($properties[1])) {
+        dpm($form);
+        $form['field_cmr_associated_record'][LANGUAGE_NONE][0]['uid']['#default_value'] = $properties[1];
+        $form['field_cmr_associated_record'][LANGUAGE_NONE][0]['uid']['#disabled'] = true;
+        $form['field_cmr_computed_into_record'][LANGUAGE_NONE]['#access'] = false;
+    }
+}
+
+/**
+ * Implements hook_form_user_profile_form_alter().
+ *
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
 function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-    dpm($form);
     if (!user_access('administer site configuration')) {
         $form['account']['name']['#disabled'] = true;
         $form['account']['status']['#disabled'] = true;
         $form['account']['roles']['#disabled'] = true;
         $form['field_user_client_id']['#disabled'] = true;
         $form['field_user_coach']['#disabled'] = true;
+    }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * @param $view
+ */
+function whg_features_views_pre_render(&$view) {
+    // Remove duplicate entries
+    switch ($view->name) {
+        case 'active_clients':
+            $existing_record = array();
+            $results = $view->result;
+            foreach ($view->result as $key => $result) {
+                $uid = $result->uid;
+                if (!in_array($uid, $existing_record)) {
+                    $existing_record[] = $uid;
+                } else {
+                    unset($results[$key]);
+                }
+            }
+            $results = array_values($results);
+            $view->result = $results;
+            break;
     }
 }
 

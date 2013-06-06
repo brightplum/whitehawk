@@ -108,6 +108,22 @@ function whg_features_node_access($node, $op, $account) {
         }
       }
       break;
+
+      case 'update':
+          switch ($node->type) {
+              case 'cmr':
+                  // if set to final, disallow editing
+                  $final = field_get_items('node', $node, 'field_cmr_final');
+                  $final = is_array($final) ? reset($final) : $final;
+                  if ($final['value'] == 'true') {
+                      global $user;
+                      if (!in_array('Case Manager', $user->roles)) {
+                          $access = NODE_ACCESS_DENY;
+                      }
+                  }
+                  break;
+          }
+          break;
   }
   return $access;
 }
@@ -224,7 +240,6 @@ function whg_features_form_cmr_node_form_alter(&$form, &$form_state) {
     $params = drupal_get_query_parameters();
     $properties = (isset($params['destination'])) ? explode('/', $params['destination']) : null;
     if (isset($properties) && is_numeric($properties[1])) {
-        dpm($form);
         $form['field_cmr_associated_record'][LANGUAGE_NONE][0]['uid']['#default_value'] = $properties[1];
         $form['field_cmr_associated_record'][LANGUAGE_NONE][0]['uid']['#disabled'] = true;
         $form['field_cmr_computed_into_record'][LANGUAGE_NONE]['#access'] = false;

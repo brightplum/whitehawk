@@ -29,6 +29,11 @@ function whg_features_init() {
                 }
             }
         }
+
+        // add additional css to user view
+        if ($path['path'] == 'user/%') {
+            drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/rubik_custom.css');
+        }
     }
 
 }

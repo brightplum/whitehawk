@@ -1,0 +1,5 @@
+drushrc.php
+files/
+local.settings.php
+private/
+settings.php

@@ -42,23 +42,31 @@ function whg_features_init() {
  * Implements hook_menu().
  */
 function whg_features_menu() {
-  $items = array();
+    $items = array();
 
-  $items['choose-page-type'] = array(
-    'title' => 'Choose Page Type',
-    'page callback' => 'whg_features_choose_page_type',
-    'access arguments' => array('administer nodes'),
-    'type' => MENU_CALLBACK,
-  );
+    $items['choose-page-type'] = array(
+        'title' => 'Choose Page Type',
+        'page callback' => 'whg_features_choose_page_type',
+        'access arguments' => array('administer nodes'),
+        'type' => MENU_CALLBACK,
+    );
 
-  $items['styleguide'] = array(
-    'title' => 'Styleguide',
-    'page callback' => 'theme',
-    'page arguments' => array('whg_features_styleguide'),
-    'access arguments' => array('access styleguide'),
-  );
+    $items['styleguide'] = array(
+        'title' => 'Styleguide',
+        'page callback' => 'theme',
+        'page arguments' => array('whg_features_styleguide'),
+        'access arguments' => array('access styleguide'),
+    );
 
-  return $items;
+    $items['admin/sync-status-codes'] = array(
+        'title' => 'Sync Status codes',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('whg_features_sync_status_codes_form'),
+        'access arguments' => array('administer site configuration'),
+        'file' => 'includes/forms.inc',
+    );
+
+    return $items;
 }
 
 /**
@@ -131,6 +139,49 @@ function whg_features_node_access($node, $op, $account) {
           break;
   }
   return $access;
+}
+
+/**
+ * Implements hook_node_insert().
+ *
+ * @param $node
+ */
+function whg_features_node_insert($node) {
+    if ($node->type == 'cmr') {
+        whg_features_set_user_status_code($node);
+    }
+}
+
+/**
+ * Implements hook_node_update().
+ *
+ * @param $node
+ */
+function whg_features_node_update($node) {
+    if ($node->type == 'cmr') {
+        whg_features_set_user_status_code($node);
+    }
+}
+
+/**
+ * Synchronize CMR status with user status.
+ *
+ * @param $node
+ */
+function whg_features_set_user_status_code($node) {
+    $code = field_get_items('node', $node, 'field_cmr_status_code');
+    $code = is_array($code) ? reset($code) : $code;
+    $code = isset($code['value']) ? $code['value'] : false;
+    $uid = field_get_items('node', $node, 'field_cmr_associated_record');
+    $uid = is_array($uid) ? reset($uid) : $uid;
+    $uid = isset($code['uid']) ? $uid['uid'] : false;
+
+    if (is_numeric($uid) && $uid != 0) {
+        $user = user_load($uid);
+        $user = entity_metadata_wrapper('user', $user);
+        $user->field_cmr_status_code->set($code);
+        $user->save();
+    }
 }
 
 /**
@@ -311,7 +362,7 @@ function whg_features_latest_cmr($uid) {
 
 /**
  * Return CMR total values.
- * 
+ *
  * @param $uid
  * @param $field
  * @param string $bundle
@@ -519,4 +570,41 @@ function whg_features_check_bypass() {
     $key = whg_features_salt($parameters['auth']);
   }
   return $key;
+}
+
+function whg_features_sync_status_codes() {
+    $query = new EntityFieldQuery();
+    $query
+      ->entityCondition('entity_type', 'user')
+      ->propertyCondition('status', 1);
+    $results = $query->execute();
+    $operations = array();
+    foreach ($results['user'] as $uid => $value) {
+        $operations[] = array('whg_features_sync_user_status_code', array($uid));
+    }
+
+    $batch = array(
+        'operations' => $operations,
+        'finished' => 'whg_features_sync_status_codes_finished',
+    );
+    return $batch;
+}
+
+function whg_features_sync_user_status_code($uid, &$context) {
+    $cmr_nid = whg_features_latest_cmr($uid);
+    if (is_numeric($cmr_nid)) {
+        $cmr = node_load($cmr_nid);
+        whg_features_set_user_status_code($cmr);
+        $context['results'][] = $cmr_nid . ' : ' . check_plain($cmr->title);
+        $context['message'] = t('Loading node "@title for @uid"', array('@title' => $cmr->title, '@uid' => $uid));
+    }
+}
+
+function whg_features_sync_status_code_finished($success, $results) {
+    if ($success) {
+        drupal_set_message(t('@count results processed.', array('@count' => count($results))));
+    } else {
+        $error_operation = reset($operations);
+        drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
+    }
 }

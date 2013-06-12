@@ -1,0 +1,15 @@
+name = "WHG D6 to D7 migration"
+description = "Migrate content from D6 site to D7"
+package = "WHG"
+core = 7.x
+
+dependencies[] = migrate
+dependencies[] = migrate_d2d
+dependencies[] = migrate_extras
+
+files[] = node.inc
+files[] = user.inc
+files[] = record.inc
+files[] = profile.inc
+files[] = name.inc
+files[] = fees.inc

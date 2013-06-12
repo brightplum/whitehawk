@@ -1,0 +1,39 @@
+diff --git a/date_migrate/date_migrate.module b/date_migrate/date_migrate.module
+index accdcf8..84934cc 100644
+--- a/date_migrate/date_migrate.module
++++ b/date_migrate/date_migrate.module
+@@ -11,6 +11,7 @@
+ function date_migrate_migrate_api() {
+   $api = array(
+     'api' => 2,
++    'field handlers' => array('DateMigrateFieldHandler'),
+   );
+   return $api;
+ }
+diff --git a/date_migrate/date_migrate.test b/date_migrate/date_migrate.test
+index 400b2d2..bede031 100644
+--- a/date_migrate/date_migrate.test
++++ b/date_migrate/date_migrate.test
+@@ -26,6 +26,8 @@ class DateMigrateExampleUnitTest extends DrupalWebTestCase {
+    */
+   function setUp() {
+     parent::setUp('migrate', 'features', 'date', 'date_repeat', 'date_repeat_field', 'date_migrate_example');
++    // Make sure the migration is registered.
++    migrate_get_module_apis();
+   }
+ 
+   /**
+diff --git a/date_migrate/date_migrate_example/date_migrate_example.module b/date_migrate/date_migrate_example/date_migrate_example.module
+index 993bd11..2ed7a61 100644
+--- a/date_migrate/date_migrate_example/date_migrate_example.module
++++ b/date_migrate/date_migrate_example/date_migrate_example.module
+@@ -13,6 +13,9 @@ include_once 'date_migrate_example.features.inc';
+ function date_migrate_example_migrate_api() {
+   $api = array(
+     'api' => 2,
++    'migrations' => array(
++      'DateExample' => array('class_name' => 'DateExampleMigration')
++    ),
+   );
+   return $api;
+ }

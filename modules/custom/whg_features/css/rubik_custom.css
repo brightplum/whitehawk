@@ -1,3 +1,8 @@
 .field-label-inline .field-label {
     width: 175px;
 }
+
+.view-id-case_management_reports div strong {
+    display: inline-block;
+    width: 175px;
+}

@@ -212,6 +212,11 @@ function whg_features_crc_nav_accordion_block() {
     return $data;
 }
 
+/**
+ * Custom block to show CMR totals.
+ *
+ * @return array
+ */
 function whg_features_cmr_user_totals_block() {
     $user = menu_get_object('user');
     $latest_cmr_nid = whg_features_latest_cmr($user->uid);
@@ -277,6 +282,12 @@ function whg_features_cmr_user_totals_block() {
 
 }
 
+/**
+ * Return latest CMR.
+ *
+ * @param $uid
+ * @return bool|mixed
+ */
 function whg_features_latest_cmr($uid) {
     $query = new EntityFieldQuery();
     $query
@@ -298,6 +309,15 @@ function whg_features_latest_cmr($uid) {
     return $return;
 }
 
+/**
+ * Return CMR total values.
+ * 
+ * @param $uid
+ * @param $field
+ * @param string $bundle
+ * @param string $condition
+ * @return number|string
+ */
 function whg_features_cmr_totals($uid, $field, $bundle = 'cmr', $condition = 'field_cmr_associated_record') {
     $query = new EntityFieldQuery();
     $query

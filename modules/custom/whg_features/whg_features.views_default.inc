@@ -46,8 +46,12 @@ function whg_features_views_default_views() {
     'field_user_client_level' => 'field_user_client_level',
     'field_cmr_status_code' => 'field_cmr_status_code',
     'field_user_coach' => 'field_user_coach',
+    'changed' => 'changed',
+    'field_cmr_status_code_1' => 'field_cmr_status_code_1',
+    'field_user_firstname_1' => 'field_user_firstname_1',
+    'field_user_lastname_1' => 'field_user_lastname_1',
   );
-  $handler->display->display_options['style_options']['default'] = 'field_user_client_id';
+  $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
     'field_user_client_id' => array(
       'sortable' => 1,
@@ -59,63 +63,91 @@ function whg_features_views_default_views() {
     'name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_company' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_worksheet_received' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_waiver_auth_received' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_lastname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_client_level' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_cmr_status_code' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_coach' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -158,7 +190,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -256,6 +288,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
   $handler->display->display_options['filters']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
   $handler->display->display_options['filters']['field_user_lastname_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 1;
   $handler->display->display_options['filters']['field_user_lastname_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator_id'] = 'field_user_lastname_value_op';
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['label'] = 'Last Name';
@@ -274,94 +307,110 @@ function whg_features_views_default_views() {
 
   /* Display: Active Clients Page */
   $handler = $view->new_display('page', 'Active Clients Page', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Active Clients';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'field_user_client_id' => 'field_user_client_id',
+    'changed' => 'changed',
     'name' => 'name',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname' => 'field_user_lastname',
     'field_user_company' => 'field_user_company',
     'field_user_worksheet_received' => 'field_user_worksheet_received',
     'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
-    'field_user_firstname' => 'field_user_firstname',
-    'field_user_lastname' => 'field_user_lastname',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
     'field_user_client_level' => 'field_user_client_level',
     'field_cmr_status_code' => 'field_cmr_status_code',
     'field_user_firstname_1' => 'field_user_firstname_1',
     'field_user_lastname_1' => 'field_user_firstname_1',
     'field_user_coach' => 'field_user_firstname_1',
-    'changed' => 'changed',
-    'field_cmr_status_code_1' => 'field_cmr_status_code_1',
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_client_id';
   $handler->display->display_options['style_options']['info'] = array(
     'field_user_client_id' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_company' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_worksheet_received' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_waiver_auth_received' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_lastname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_client_level' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_cmr_status_code' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname_1' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '<br />',
+      'align' => 'views-align-center',
+      'separator' => '<br>',
       'empty_column' => 0,
     ),
     'field_user_lastname_1' => array(
@@ -378,24 +427,16 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'changed' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_cmr_status_code_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
   );
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Result summary */
+  $handler->display->display_options['empty']['result']['id'] = 'result';
+  $handler->display->display_options['empty']['result']['table'] = 'views';
+  $handler->display->display_options['empty']['result']['field'] = 'result';
+  $handler->display->display_options['empty']['result']['empty'] = TRUE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: User: Associated Record (field_cmr_associated_record) - reverse */
   $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['id'] = 'reverse_field_cmr_associated_record_node';
@@ -417,12 +458,29 @@ function whg_features_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 1,
   );
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'short';
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Username';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['label'] = 'Client First Name';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['label'] = 'Client Last Name';
   /* Field: User: Company */
   $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
   $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
@@ -438,7 +496,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -449,14 +507,19 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: First Name */
-  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
-  /* Field: User: Last Name */
-  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['label'] = 'Date of Last Contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
   /* Field: User: Client Level */
   $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
   $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
@@ -481,18 +544,11 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
   $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
   $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
-  /* Field: Content: Updated date */
-  $handler->display->display_options['fields']['changed']['id'] = 'changed';
-  $handler->display->display_options['fields']['changed']['table'] = 'node';
-  $handler->display->display_options['fields']['changed']['field'] = 'changed';
-  $handler->display->display_options['fields']['changed']['relationship'] = 'reverse_field_cmr_associated_record_node';
-  $handler->display->display_options['fields']['changed']['date_format'] = 'short';
-  /* Field: Content: Status Code */
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['id'] = 'field_cmr_status_code_1';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['table'] = 'field_data_field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['field'] = 'field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['relationship'] = 'reverse_field_cmr_associated_record_node';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: User: Active */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -508,6 +564,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['rid']['value'] = array(
     8 => '8',
   );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
   /* Filter criterion: Content: Status Code (field_cmr_status_code) */
   $handler->display->display_options['filters']['field_cmr_status_code_value']['id'] = 'field_cmr_status_code_value';
   $handler->display->display_options['filters']['field_cmr_status_code_value']['table'] = 'field_data_field_cmr_status_code';
@@ -521,6 +578,7 @@ function whg_features_views_default_views() {
     'PN' => 'PN',
     'PN-A' => 'PN-A',
   );
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['group'] = 1;
   $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator_id'] = 'field_cmr_status_code_value_op';
   $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['label'] = 'Status Code (field_cmr_status_code)';
   $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator'] = 'field_cmr_status_code_value_op';
@@ -530,6 +588,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
   $handler->display->display_options['filters']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
   $handler->display->display_options['filters']['field_user_lastname_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 2;
   $handler->display->display_options['filters']['field_user_lastname_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator_id'] = 'field_user_lastname_value_op';
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['label'] = 'Last Name';
@@ -545,10 +604,55 @@ function whg_features_views_default_views() {
     8 => 0,
     11 => 0,
   );
+  /* Filter criterion: User: Coach (field_user_coach) */
+  $handler->display->display_options['filters']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['filters']['field_user_coach_uid']['field'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_coach_uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['operator_id'] = 'field_user_coach_uid_op';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['label'] = 'Coach';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['operator'] = 'field_user_coach_uid_op';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['identifier'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+  /* Filter criterion: User: Company (field_user_company) */
+  $handler->display->display_options['filters']['field_user_company_value']['id'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['filters']['field_user_company_value']['field'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_company_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['operator_id'] = 'field_user_company_value_op';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['label'] = 'Company';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['operator'] = 'field_user_company_value_op';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['identifier'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
   $handler->display->display_options['path'] = 'admin/active-clients';
 
   /* Display: All Clients Page */
   $handler = $view->new_display('page', 'All Clients Page', 'page_1');
+  $handler->display->display_options['defaults']['exposed_form'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -565,78 +669,77 @@ function whg_features_views_default_views() {
     'field_user_lastname_1' => 'field_user_firstname_1',
     'field_user_coach' => 'field_user_firstname_1',
     'changed' => 'changed',
-    'field_cmr_status_code_1' => 'field_cmr_status_code_1',
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_client_id';
   $handler->display->display_options['style_options']['info'] = array(
     'field_user_client_id' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_company' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_worksheet_received' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_waiver_auth_received' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_lastname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_client_level' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_cmr_status_code' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname_1' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '<br />',
+      'align' => 'views-align-left',
+      'separator' => '<br>',
       'empty_column' => 0,
     ),
     'field_user_lastname_1' => array(
@@ -654,16 +757,9 @@ function whg_features_views_default_views() {
       'empty_column' => 0,
     ),
     'changed' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_cmr_status_code_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -696,6 +792,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Username';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
   /* Field: User: Company */
@@ -713,7 +810,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -762,11 +859,117 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['changed']['field'] = 'changed';
   $handler->display->display_options['fields']['changed']['relationship'] = 'reverse_field_cmr_associated_record_node';
   $handler->display->display_options['fields']['changed']['date_format'] = 'short';
-  /* Field: Content: Status Code */
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['id'] = 'field_cmr_status_code_1';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['table'] = 'field_data_field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['field'] = 'field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    8 => '8',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  /* Filter criterion: Content: Status Code (field_cmr_status_code) */
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['id'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['field'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['value'] = array(
+    'A' => 'A',
+    'A-H' => 'A-H',
+    'NA' => 'NA',
+    'NC' => 'NC',
+    'PN' => 'PN',
+    'PN-A' => 'PN-A',
+    'A-1' => 'A-1',
+    'PN-4' => 'PN-4',
+    'PN-5' => 'PN-5',
+    'PN-A-1' => 'PN-A-1',
+    1 => '1',
+    2 => '2',
+    3 => '3',
+    4 => '4',
+    5 => '5',
+  );
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator_id'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['label'] = 'Status Code (field_cmr_status_code)';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['identifier'] = 'field_cmr_status_code_value';
+  /* Filter criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['filters']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['filters']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_lastname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator_id'] = 'field_user_lastname_value_op';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['label'] = 'Client Last Name';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator'] = 'field_user_lastname_value_op';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['identifier'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+  /* Filter criterion: User: Company (field_user_company) */
+  $handler->display->display_options['filters']['field_user_company_value']['id'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['filters']['field_user_company_value']['field'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_company_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['operator_id'] = 'field_user_company_value_op';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['label'] = 'Company';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['operator'] = 'field_user_company_value_op';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['identifier'] = 'field_user_company_value';
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_user_company_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+  /* Filter criterion: User: Coach (field_user_coach) */
+  $handler->display->display_options['filters']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['filters']['field_user_coach_uid']['field'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_coach_uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['operator_id'] = 'field_user_coach_uid_op';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['label'] = 'Coach';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['operator'] = 'field_user_coach_uid_op';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['identifier'] = 'field_user_coach_uid';
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_user_coach_uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
   $handler->display->display_options['path'] = 'admin/all-clients';
 
   /* Display: Coach Clients Page - Active */
@@ -774,49 +977,24 @@ function whg_features_views_default_views() {
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Active Clients';
   $handler->display->display_options['display_description'] = 'Active Clients - link on Coach Dashboard';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'access user profiles';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'changed' => 'changed',
+    'uid' => 'uid',
+    'field_user_client_id' => 'field_user_client_id',
     'field_user_lastname' => 'field_user_lastname',
     'field_user_firstname' => 'field_user_firstname',
+    'field_user_assignment_date' => 'field_user_assignment_date',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
     'field_cmr_status_code' => 'field_cmr_status_code',
-    'field_user_coach' => 'field_user_coach',
-    'field_user_client_id' => 'field_user_client_id',
-    'field_user_firstname_1' => 'field_user_firstname_1',
-    'field_user_lastname_1' => 'field_user_lastname_1',
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_lastname';
   $handler->display->display_options['style_options']['info'] = array(
-    'changed' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_lastname' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_firstname' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_cmr_status_code' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_coach' => array(
+    'uid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -830,17 +1008,45 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_firstname_1' => array(
-      'sortable' => 0,
+    'field_user_lastname' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_lastname_1' => array(
-      'sortable' => 0,
+    'field_user_firstname' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_assignment_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -857,6 +1063,13 @@ function whg_features_views_default_views() {
   $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   $handler->display->display_options['header']['area']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = '<h3>No results</h3>';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: User: Coach (field_user_coach) */
   $handler->display->display_options['relationships']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
@@ -869,6 +1082,11 @@ function whg_features_views_default_views() {
   $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['table'] = 'users';
   $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['field'] = 'reverse_field_cmr_associated_record_node';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   /* Field: User: Client ID */
   $handler->display->display_options['fields']['field_user_client_id']['id'] = 'field_user_client_id';
   $handler->display->display_options['fields']['field_user_client_id']['table'] = 'field_data_field_user_client_id';
@@ -881,6 +1099,8 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
   $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
   $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lastname']['alter']['path'] = 'user/[uid]';
   /* Field: User: First Name */
   $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
   $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
@@ -897,7 +1117,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -929,6 +1149,10 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
   $handler->display->display_options['fields']['field_cmr_status_code']['label'] = 'Code';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['sorts']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: User: Coach (field_user_coach) */
   $handler->display->display_options['arguments']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
@@ -940,6 +1164,10 @@ function whg_features_views_default_views() {
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: User: Active */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -948,12 +1176,39 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    8 => '8',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  /* Filter criterion: Content: Status Code (field_cmr_status_code) */
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['id'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['field'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['value'] = array(
+    'A' => 'A',
+    'A-H' => 'A-H',
+    'NA' => 'NA',
+    'NC' => 'NC',
+    'PN' => 'PN',
+    'PN-A' => 'PN-A',
+  );
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator_id'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['label'] = 'Status Code (field_cmr_status_code)';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['identifier'] = 'field_cmr_status_code_value';
   /* Filter criterion: User: Last Name (field_user_lastname) */
   $handler->display->display_options['filters']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
   $handler->display->display_options['filters']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
   $handler->display->display_options['filters']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
   $handler->display->display_options['filters']['field_user_lastname_value']['operator'] = 'contains';
-  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_lastname_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator_id'] = 'field_user_lastname_value_op';
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['label'] = 'Last Name';
   $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator'] = 'field_user_lastname_value_op';
@@ -972,12 +1227,121 @@ function whg_features_views_default_views() {
 
   /* Display: Coach's All Clients Page */
   $handler = $view->new_display('page', 'Coach\'s All Clients Page', 'page_3');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
+    'field_user_client_id' => 'field_user_client_id',
+    'name' => 'name',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_company' => 'field_user_company',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_status_code' => 'field_cmr_status_code',
+    'changed' => 'changed',
+    'field_user_coach' => 'field_user_coach',
+  );
+  $handler->display->display_options['style_options']['default'] = 'uid';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_coach' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = 'All Clients for [field_user_firstname_1] [field_user_lastname_1]';
+  $handler->display->display_options['header']['area']['content'] = 'All Clients for [field_user_coach]';
   $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   $handler->display->display_options['header']['area']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
@@ -993,10 +1357,15 @@ function whg_features_views_default_views() {
   $handler->display->display_options['relationships']['field_user_coach_uid']['label'] = 'coach';
   $handler->display->display_options['relationships']['field_user_coach_uid']['delta'] = '-1';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
   /* Field: User: Client ID */
   $handler->display->display_options['fields']['field_user_client_id']['id'] = 'field_user_client_id';
   $handler->display->display_options['fields']['field_user_client_id']['table'] = 'field_data_field_user_client_id';
   $handler->display->display_options['fields']['field_user_client_id']['field'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['label'] = 'Client D6 ID';
   $handler->display->display_options['fields']['field_user_client_id']['settings'] = array(
     'thousand_separator' => '',
     'prefix_suffix' => 1,
@@ -1005,12 +1374,27 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Username';
+  $handler->display->display_options['fields']['name']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['name']['alter']['text'] = '[name] ';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
   /* Field: User: Company */
   $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
   $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
   $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
   /* Field: User: Worksheet Received */
   $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
   $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
@@ -1022,7 +1406,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -1033,50 +1417,33 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: First Name */
-  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
-  /* Field: User: Last Name */
-  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
-  /* Field: User: Client Level */
-  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
-  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
-  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
   /* Field: Content: Status Code */
   $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
   $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
   $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
   $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
-  /* Field: User: Coach */
-  $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
-  $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
-  $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
   /* Field: Content: Updated date */
   $handler->display->display_options['fields']['changed']['id'] = 'changed';
   $handler->display->display_options['fields']['changed']['table'] = 'node';
   $handler->display->display_options['fields']['changed']['field'] = 'changed';
   $handler->display->display_options['fields']['changed']['relationship'] = 'reverse_field_cmr_associated_record_node';
   $handler->display->display_options['fields']['changed']['date_format'] = 'short';
-  /* Field: Content: Status Code */
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['id'] = 'field_cmr_status_code_1';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['table'] = 'field_data_field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['field'] = 'field_cmr_status_code';
-  $handler->display->display_options['fields']['field_cmr_status_code_1']['relationship'] = 'reverse_field_cmr_associated_record_node';
-  /* Field: User: First Name */
-  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
-  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
-  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
-  $handler->display->display_options['fields']['field_user_firstname_1']['exclude'] = TRUE;
-  /* Field: User: Last Name */
-  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
-  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
-  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
-  $handler->display->display_options['fields']['field_user_lastname_1']['exclude'] = TRUE;
+  /* Field: User: Coach */
+  $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: User: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'users';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  /* Sort criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['sorts']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['expose']['label'] = 'Last Name';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: User: Coach (field_user_coach) */
   $handler->display->display_options['arguments']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
@@ -1087,6 +1454,115 @@ function whg_features_views_default_views() {
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    8 => '8',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  /* Filter criterion: Content: Status Code (field_cmr_status_code) */
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['id'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['field'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['value'] = array(
+    'NA' => 'NA',
+    'NC' => 'NC',
+    'PN' => 'PN',
+    'PN-A' => 'PN-A',
+    'A' => 'A',
+    'A-H' => 'A-H',
+    'A-1' => 'A-1',
+    'PN-4' => 'PN-4',
+    'PN-5' => 'PN-5',
+    'PN-A-1' => 'PN-A-1',
+    1 => '1',
+    2 => '2',
+    3 => '3',
+    4 => '4',
+    5 => '5',
+  );
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator_id'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['label'] = 'Status Code (field_cmr_status_code)';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['operator'] = 'field_cmr_status_code_value_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value']['expose']['identifier'] = 'field_cmr_status_code_value';
+  /* Filter criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['filters']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['filters']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_user_lastname_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_user_lastname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator_id'] = 'field_user_lastname_value_op';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['label'] = 'Last Name';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['operator'] = 'field_user_lastname_value_op';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['identifier'] = 'field_user_lastname_value';
+  $handler->display->display_options['filters']['field_user_lastname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+  /* Filter criterion: Content: Status Code (field_cmr_status_code) */
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['id'] = 'field_cmr_status_code_value_1';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['field'] = 'field_cmr_status_code_value';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['value'] = array(
+    'NA' => 'NA',
+    'NC' => 'NC',
+    'PN' => 'PN',
+    'PN-A' => 'PN-A',
+    'A' => 'A',
+    'A-H' => 'A-H',
+    'A-1' => 'A-1',
+    'PN-4' => 'PN-4',
+    'PN-5' => 'PN-5',
+    'PN-A-1' => 'PN-A-1',
+    1 => '1',
+    2 => '2',
+    3 => '3',
+    4 => '4',
+    5 => '5',
+  );
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['group'] = 2;
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['operator_id'] = 'field_cmr_status_code_value_1_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['label'] = 'Code';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['operator'] = 'field_cmr_status_code_value_1_op';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['identifier'] = 'field_cmr_status_code_value_1';
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_cmr_status_code_value_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
   $handler->display->display_options['path'] = 'coach/clients';
 
   /* Display: Coach Follow Up Page */
@@ -1114,7 +1590,7 @@ function whg_features_views_default_views() {
     'field_user_follow_up' => 'field_user_follow_up',
     'field_user_follow_up_notes' => 'field_user_follow_up_notes',
   );
-  $handler->display->display_options['style_options']['default'] = 'field_user_client_id';
+  $handler->display->display_options['style_options']['default'] = 'field_user_lastname';
   $handler->display->display_options['style_options']['info'] = array(
     'field_user_client_id' => array(
       'sortable' => 1,
@@ -1176,6 +1652,15 @@ function whg_features_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = '<h3>No records have been flagged "Yes" for follow up</h3>
+';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: User: Associated Record (field_cmr_associated_record) - reverse */
   $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['id'] = 'reverse_field_cmr_associated_record_node';
@@ -1226,22 +1711,25 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
   $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
   $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
-  /* Field: User: Follow-Up */
+  /* Field: User: Needs Follow-Up? */
   $handler->display->display_options['fields']['field_user_follow_up']['id'] = 'field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['table'] = 'field_data_field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['field'] = 'field_user_follow_up';
-  /* Field: User: Follow-Up Notes */
+  $handler->display->display_options['fields']['field_user_follow_up']['label'] = 'Follow-Up';
+  /* Field: User: Notes to Record */
   $handler->display->display_options['fields']['field_user_follow_up_notes']['id'] = 'field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['table'] = 'field_data_field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['field'] = 'field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['label'] = 'Notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['element_type'] = 'em';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['empty'] = 'No results';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: User: Coach (field_user_coach) */
   $handler->display->display_options['arguments']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
   $handler->display->display_options['arguments']['field_user_coach_uid']['table'] = 'field_data_field_user_coach';
   $handler->display->display_options['arguments']['field_user_coach_uid']['field'] = 'field_user_coach_uid';
-  $handler->display->display_options['arguments']['field_user_coach_uid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_user_coach_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_user_coach_uid']['default_argument_type'] = 'current_user';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_user_coach_uid']['summary_options']['items_per_page'] = '25';
@@ -1262,7 +1750,7 @@ function whg_features_views_default_views() {
     8 => '8',
   );
   $handler->display->display_options['filters']['rid']['group'] = 1;
-  /* Filter criterion: User: Follow-Up (field_user_follow_up) */
+  /* Filter criterion: User: Needs Follow-Up? (field_user_follow_up) */
   $handler->display->display_options['filters']['field_user_follow_up_value']['id'] = 'field_user_follow_up_value';
   $handler->display->display_options['filters']['field_user_follow_up_value']['table'] = 'field_data_field_user_follow_up';
   $handler->display->display_options['filters']['field_user_follow_up_value']['field'] = 'field_user_follow_up_value';
@@ -1291,7 +1779,7 @@ function whg_features_views_default_views() {
     8 => 0,
     11 => 0,
   );
-  /* Filter criterion: User: Follow-Up Notes (field_user_follow_up_notes) */
+  /* Filter criterion: User: Notes to Record (field_user_follow_up_notes) */
   $handler->display->display_options['filters']['field_user_follow_up_notes_value']['id'] = 'field_user_follow_up_notes_value';
   $handler->display->display_options['filters']['field_user_follow_up_notes_value']['table'] = 'field_data_field_user_follow_up_notes';
   $handler->display->display_options['filters']['field_user_follow_up_notes_value']['field'] = 'field_user_follow_up_notes_value';
@@ -1351,7 +1839,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -1426,70 +1914,62 @@ function whg_features_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'changed' => 'changed',
+    'field_user_client_id' => 'field_user_client_id',
     'field_user_lastname' => 'field_user_lastname',
     'field_user_firstname' => 'field_user_firstname',
+    'field_user_assignment_date' => 'field_user_assignment_date',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
     'field_cmr_status_code' => 'field_cmr_status_code',
-    'field_user_coach' => 'field_user_coach',
-    'field_user_client_id' => 'field_user_client_id',
-    'field_user_firstname_1' => 'field_user_firstname_1',
-    'field_user_lastname_1' => 'field_user_lastname_1',
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_lastname';
   $handler->display->display_options['style_options']['info'] = array(
-    'changed' => array(
+    'field_user_client_id' => array(
       'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_lastname' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_user_firstname' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_assignment_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_cmr_status_code' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_coach' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_client_id' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_firstname_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_lastname_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -1546,7 +2026,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -1635,7 +2115,13 @@ function whg_features_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Case Management Reports';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    10 => '10',
+    9 => '9',
+    5 => '5',
+    11 => '11',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -1790,13 +2276,6 @@ function whg_features_views_default_views() {
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Content: Published */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -1804,21 +2283,175 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'cmr' => 'cmr',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    10 => '10',
+    8 => '8',
+    9 => '9',
+    11 => '11',
+  );
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'title',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['empty'] = TRUE;
-  $handler->display->display_options['header']['area']['content'] = '<a href="/node/add/cmr">Create New CMR</a>';
+  $handler->display->display_options['header']['area']['content'] = '<h6><em><center><a href="/node/add/cmr?destination=user/!1/case-management-reports">** Create New CMR for %1 **</a></center></em></h6><hr>';
   $handler->display->display_options['header']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['header']['area']['tokenize'] = TRUE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'h1';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Report Submitted';
+  $handler->display->display_options['fields']['created']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['created']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_service_started']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['empty'] = '<em>still active</em>';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['label'] = 'Code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_status_code']['element_wrapper_type'] = 'div';
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_hours']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_hours']['empty'] = 'no time reported';
+  $handler->display->display_options['fields']['field_cmr_hours']['settings'] = array(
+    'thousand_separator' => '',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['label'] = 'Phase(s)';
+  $handler->display->display_options['fields']['field_cmr_phase']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_phase']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_phase']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_cmr_phase']['empty'] = '<em>no Phase of Service reported</em>';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['element_type'] = 'h3';
+  $handler->display->display_options['fields']['field_cmr_remarks']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_cmr_remarks']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_cmr_remarks']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_cmr_remarks']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Content: Add comment link */
+  $handler->display->display_options['fields']['comments_link']['id'] = 'comments_link';
+  $handler->display->display_options['fields']['comments_link']['table'] = 'node';
+  $handler->display->display_options['fields']['comments_link']['field'] = 'comments_link';
+  $handler->display->display_options['fields']['comments_link']['label'] = '';
+  $handler->display->display_options['fields']['comments_link']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['comments_link']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['comments_link']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['comments_link']['teaser'] = TRUE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<p>&nbsp;</p><hr><p>&nbsp;</p>';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   $handler->display->display_options['path'] = 'user/%/case-management-reports';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Case Management Reports';
-  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['weight'] = '10';
   $handler->display->display_options['menu']['name'] = 'user-menu';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
@@ -1827,6 +2460,9 @@ function whg_features_views_default_views() {
   $handler = $view->new_display('block', 'CMR Block for User View', 'block_1');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Case Management';
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
@@ -1848,6 +2484,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['validate']['type'] = 'user';
   $handler->display->display_options['arguments']['field_cmr_associated_record_uid']['validate_options']['type'] = 'either';
+  $handler->display->display_options['block_description'] = 'Case Status';
   $export['case_management_reports'] = $view;
 
   $view = new view();
@@ -1908,7 +2545,7 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
   $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
   $handler->display->display_options['fields']['field_user_company']['element_label_type'] = 'h5';
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -1936,16 +2573,18 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['webform_submission_count_user']['element_label_type'] = 'h5';
   $handler->display->display_options['fields']['webform_submission_count_user']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['webform_submission_count_user']['empty_zero'] = TRUE;
-  /* Field: User: Follow-Up */
+  /* Field: User: Needs Follow-Up? */
   $handler->display->display_options['fields']['field_user_follow_up']['id'] = 'field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['table'] = 'field_data_field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['field'] = 'field_user_follow_up';
+  $handler->display->display_options['fields']['field_user_follow_up']['label'] = 'Follow-Up';
   $handler->display->display_options['fields']['field_user_follow_up']['element_label_type'] = 'h5';
   $handler->display->display_options['fields']['field_user_follow_up']['hide_empty'] = TRUE;
-  /* Field: User: Follow-Up Notes */
+  /* Field: User: Notes to Record */
   $handler->display->display_options['fields']['field_user_follow_up_notes']['id'] = 'field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['table'] = 'field_data_field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['field'] = 'field_user_follow_up_notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['label'] = 'Follow-Up Notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['element_label_type'] = 'h5';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['hide_empty'] = TRUE;
   /* Sort criterion: User: Created date */
@@ -1965,6 +2604,267 @@ function whg_features_views_default_views() {
   $handler = $view->new_display('block', 'Block', 'block');
   $handler->display->display_options['block_description'] = 'Client Info';
   $export['client_info'] = $view;
+
+  $view = new view();
+  $view->name = 'clone_of_active_clients';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'users';
+  $view->human_name = 'Find Records by Username';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Find Record by Username or Role';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'access user profiles';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '25';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '20';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_user_client_id' => 'field_user_client_id',
+    'name' => 'name',
+    'field_user_company' => 'field_user_company',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_cmr_status_code' => 'field_cmr_status_code',
+    'field_user_coach' => 'field_user_coach',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_user_client_id';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_user_client_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_coach' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Relationship: User: Associated Record (field_cmr_associated_record) - reverse */
+  $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['id'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['table'] = 'users';
+  $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['field'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['relationships']['reverse_field_cmr_associated_record_node']['label'] = 'cmr';
+  /* Field: User: Client ID */
+  $handler->display->display_options['fields']['field_user_client_id']['id'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['table'] = 'field_data_field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['field'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: User: Coach */
+  $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
+  /* Field: User: Address */
+  $handler->display->display_options['fields']['field_user_address']['id'] = 'field_user_address';
+  $handler->display->display_options['fields']['field_user_address']['table'] = 'field_data_field_user_address';
+  $handler->display->display_options['fields']['field_user_address']['field'] = 'field_user_address';
+  $handler->display->display_options['fields']['field_user_address']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['field_user_address']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  /* Field: User: Phone */
+  $handler->display->display_options['fields']['field_user_phone']['id'] = 'field_user_phone';
+  $handler->display->display_options['fields']['field_user_phone']['table'] = 'field_data_field_user_phone';
+  $handler->display->display_options['fields']['field_user_phone']['field'] = 'field_user_phone';
+  $handler->display->display_options['fields']['field_user_phone']['empty'] = '<em>entry needed</em>';
+  $handler->display->display_options['fields']['field_user_phone']['delta_offset'] = '0';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  /* Sort criterion: User: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'users';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    8 => '8',
+  );
+  $handler->display->display_options['filters']['rid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['rid']['expose']['operator_id'] = 'rid_op';
+  $handler->display->display_options['filters']['rid']['expose']['label'] = 'Roles';
+  $handler->display->display_options['filters']['rid']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['rid']['expose']['operator'] = 'rid_op';
+  $handler->display->display_options['filters']['rid']['expose']['identifier'] = 'rid';
+  $handler->display->display_options['filters']['rid']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['rid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+  /* Filter criterion: User: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Name';
+  $handler->display->display_options['filters']['uid']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
+    2 => 0,
+    3 => '3',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/active-clients';
+  $export['clone_of_active_clients'] = $view;
 
   $view = new view();
   $view->name = 'cmr_comments';
@@ -2132,18 +3032,35 @@ function whg_features_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_cmr_final' => 'field_cmr_final',
     'created' => 'created',
-    'field_ncf_associated_record' => 'field_ncf_associated_record',
     'changed' => 'changed',
+    'field_cmr_associated_record' => 'field_cmr_associated_record',
     'name' => 'name',
     'last_comment_name' => 'last_comment_name',
     'comment_body' => 'comment_body',
-    'replyto_comment' => 'replyto_comment',
     'edit_comment' => 'edit_comment',
-    'delete_comment' => 'delete_comment',
+    'replyto_comment_1' => 'replyto_comment_1',
+    'view_comment' => 'view_comment',
+    'last_updated' => 'last_updated',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'title';
   $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_final' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'created' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
@@ -2151,17 +3068,17 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_ncf_associated_record' => array(
-      'sortable' => 0,
+    'changed' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => 'views-align-left',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'changed' => array(
-      'sortable' => 0,
+    'field_cmr_associated_record' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => 'views-align-center',
+      'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -2173,7 +3090,7 @@ function whg_features_views_default_views() {
       'empty_column' => 0,
     ),
     'last_comment_name' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => 'views-align-left',
       'separator' => '',
@@ -2186,43 +3103,61 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'replyto_comment' => array(
-      'align' => 'views-align-center',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'edit_comment' => array(
       'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'delete_comment' => array(
+    'replyto_comment_1' => array(
       'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'view_comment' => array(
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'last_updated' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
   );
   $handler->display->display_options['style_options']['sticky'] = TRUE;
+  $handler->display->display_options['style_options']['caption'] = 'CMR Comments';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'CMR';
+  /* Field: Content: Final */
+  $handler->display->display_options['fields']['field_cmr_final']['id'] = 'field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['table'] = 'field_data_field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['field'] = 'field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['label'] = 'Status of CMR';
   /* Field: Comment: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'comment';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['relationship'] = 'cid';
   $handler->display->display_options['fields']['created']['date_format'] = 'short';
-  /* Field: Content: Associated Record */
-  $handler->display->display_options['fields']['field_ncf_associated_record']['id'] = 'field_ncf_associated_record';
-  $handler->display->display_options['fields']['field_ncf_associated_record']['table'] = 'field_data_field_ncf_associated_record';
-  $handler->display->display_options['fields']['field_ncf_associated_record']['field'] = 'field_ncf_associated_record';
   /* Field: Comment: Updated date */
   $handler->display->display_options['fields']['changed']['id'] = 'changed';
   $handler->display->display_options['fields']['changed']['table'] = 'comment';
   $handler->display->display_options['fields']['changed']['field'] = 'changed';
   $handler->display->display_options['fields']['changed']['relationship'] = 'cid';
   $handler->display->display_options['fields']['changed']['date_format'] = 'short';
+  /* Field: Content: Associated Record */
+  $handler->display->display_options['fields']['field_cmr_associated_record']['id'] = 'field_cmr_associated_record';
+  $handler->display->display_options['fields']['field_cmr_associated_record']['table'] = 'field_data_field_cmr_associated_record';
+  $handler->display->display_options['fields']['field_cmr_associated_record']['field'] = 'field_cmr_associated_record';
   /* Field: Comment: Author */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'comment';
@@ -2237,13 +3172,6 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['comment_body']['table'] = 'field_data_comment_body';
   $handler->display->display_options['fields']['comment_body']['field'] = 'comment_body';
   $handler->display->display_options['fields']['comment_body']['relationship'] = 'cid';
-  /* Field: Comment: Reply-to link */
-  $handler->display->display_options['fields']['replyto_comment']['id'] = 'replyto_comment';
-  $handler->display->display_options['fields']['replyto_comment']['table'] = 'comment';
-  $handler->display->display_options['fields']['replyto_comment']['field'] = 'replyto_comment';
-  $handler->display->display_options['fields']['replyto_comment']['relationship'] = 'cid';
-  $handler->display->display_options['fields']['replyto_comment']['label'] = '';
-  $handler->display->display_options['fields']['replyto_comment']['element_label_colon'] = FALSE;
   /* Field: Comment: Edit link */
   $handler->display->display_options['fields']['edit_comment']['id'] = 'edit_comment';
   $handler->display->display_options['fields']['edit_comment']['table'] = 'comment';
@@ -2251,13 +3179,24 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['edit_comment']['relationship'] = 'cid';
   $handler->display->display_options['fields']['edit_comment']['label'] = '';
   $handler->display->display_options['fields']['edit_comment']['element_label_colon'] = FALSE;
-  /* Field: Comment: Delete link */
-  $handler->display->display_options['fields']['delete_comment']['id'] = 'delete_comment';
-  $handler->display->display_options['fields']['delete_comment']['table'] = 'comment';
-  $handler->display->display_options['fields']['delete_comment']['field'] = 'delete_comment';
-  $handler->display->display_options['fields']['delete_comment']['relationship'] = 'cid';
-  $handler->display->display_options['fields']['delete_comment']['label'] = '';
-  $handler->display->display_options['fields']['delete_comment']['element_label_colon'] = FALSE;
+  /* Field: Comment: Reply-to link */
+  $handler->display->display_options['fields']['replyto_comment_1']['id'] = 'replyto_comment_1';
+  $handler->display->display_options['fields']['replyto_comment_1']['table'] = 'comment';
+  $handler->display->display_options['fields']['replyto_comment_1']['field'] = 'replyto_comment';
+  $handler->display->display_options['fields']['replyto_comment_1']['relationship'] = 'cid';
+  $handler->display->display_options['fields']['replyto_comment_1']['label'] = '';
+  $handler->display->display_options['fields']['replyto_comment_1']['element_label_colon'] = FALSE;
+  /* Field: Comment: View link */
+  $handler->display->display_options['fields']['view_comment']['id'] = 'view_comment';
+  $handler->display->display_options['fields']['view_comment']['table'] = 'comment';
+  $handler->display->display_options['fields']['view_comment']['field'] = 'view_comment';
+  $handler->display->display_options['fields']['view_comment']['relationship'] = 'cid';
+  $handler->display->display_options['fields']['view_comment']['label'] = '';
+  $handler->display->display_options['fields']['view_comment']['element_label_colon'] = FALSE;
+  /* Field: Content: Updated/commented date */
+  $handler->display->display_options['fields']['last_updated']['id'] = 'last_updated';
+  $handler->display->display_options['fields']['last_updated']['table'] = 'node_comment_statistics';
+  $handler->display->display_options['fields']['last_updated']['field'] = 'last_updated';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Last comment author */
   $handler->display->display_options['sorts']['last_comment_name']['id'] = 'last_comment_name';
@@ -2271,6 +3210,8 @@ function whg_features_views_default_views() {
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['relationship'] = 'cid';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Post date';
   $handler->display->display_options['sorts']['created']['granularity'] = 'day';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
@@ -2500,7 +3441,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -2622,12 +3563,726 @@ function whg_features_views_default_views() {
     11 => 0,
   );
 
-  /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  /* Display: Admin CMR Summary Page */
+  $handler = $view->new_display('page', 'Admin CMR Summary Page', 'page');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'created' => 'created',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname_1' => 'field_user_lastname_1',
+    'field_user_firstname_1' => 'field_user_firstname_1',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_service_started' => 'field_cmr_service_started',
+    'field_user_company' => 'field_user_company',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
+    'field_cmr_inactivation_date' => 'field_cmr_inactivation_date',
+    'field_cmr_status_code' => 'field_cmr_status_code',
+    'field_cmr_hours' => 'field_cmr_hours',
+    'field_cmr_phase' => 'field_cmr_phase',
+    'field_cmr_service_fee' => 'field_cmr_service_fee',
+    'field_ncf_coaching_fee_amount' => 'field_ncf_coaching_fee_amount',
+    'field_cmr_remarks' => 'field_cmr_remarks',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_user_lastname';
+  $handler->display->display_options['style_options']['info'] = array(
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_started' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_inactivation_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_hours' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_phase' => array(
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_fee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-right',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_coaching_fee_amount' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-right',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_remarks' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['sticky'] = TRUE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
+  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_lastname_1']['label'] = 'Coach Last';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
+  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_firstname_1']['label'] = 'Coach First';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['label'] = 'Level';
+  $handler->display->display_options['fields']['field_user_client_level']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_status_code']['label'] = 'Code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['label'] = 'Coaching Fees';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => '$0.00',
+  );
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fees';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => '$0.00',
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_remarks']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_cmr_remarks']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => 'field is blank',
+  );
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Post date */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'node';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['filters']['created']['operator'] = 'between';
+  $handler->display->display_options['filters']['created']['value']['min'] = '2013-05-16';
+  $handler->display->display_options['filters']['created']['value']['max'] = '2013-06-15';
+  $handler->display->display_options['filters']['created']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['label'] = 'Date';
+  $handler->display->display_options['filters']['created']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    9 => 0,
+    3 => 0,
+    10 => 0,
+    8 => 0,
+    11 => 0,
+  );
   $handler->display->display_options['path'] = 'admin/cmr-summary';
 
   /* Display: Coach CMR Page */
   $handler = $view->new_display('page', 'Coach CMR Page', 'page_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_cmr_final' => 'field_cmr_final',
+    'created' => 'created',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname_1' => 'field_user_lastname_1',
+    'field_user_firstname_1' => 'field_user_firstname_1',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_service_started' => 'field_cmr_service_started',
+    'field_user_company' => 'field_user_company',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
+    'field_cmr_inactivation_date' => 'field_cmr_inactivation_date',
+    'field_cmr_status_code' => 'field_cmr_status_code',
+    'field_cmr_hours' => 'field_cmr_hours',
+    'field_cmr_phase' => 'field_cmr_phase',
+    'field_cmr_service_fee' => 'field_cmr_service_fee',
+    'field_cmr_remarks' => 'field_cmr_remarks',
+    'field_ncf_coaching_fee_amount' => 'field_ncf_coaching_fee_amount',
+    'nothing' => 'nothing',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_user_lastname';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_cmr_final' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_started' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_inactivation_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_hours' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_phase' => array(
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_fee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_remarks' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_coaching_fee_amount' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-right',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => 'views-align-right',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['sticky'] = TRUE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Final */
+  $handler->display->display_options['fields']['field_cmr_final']['id'] = 'field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['table'] = 'field_data_field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['field'] = 'field_cmr_final';
+  $handler->display->display_options['fields']['field_cmr_final']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_final']['label'] = 'Status of CMR';
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['label'] = 'Client Last Name';
+  $handler->display->display_options['fields']['field_user_lastname']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['label'] = 'Client First Name';
+  $handler->display->display_options['fields']['field_user_firstname']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
+  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_lastname_1']['label'] = 'Coach Last';
+  $handler->display->display_options['fields']['field_user_lastname_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lastname_1']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
+  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_firstname_1']['label'] = 'Coach First';
+  $handler->display->display_options['fields']['field_user_firstname_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_user_firstname_1']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['label'] = 'Service Level';
+  $handler->display->display_options['fields']['field_user_client_level']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_status_code']['label'] = 'Code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_phase']['label'] = 'Phase(s) of Service';
+  $handler->display->display_options['fields']['field_cmr_phase']['settings'] = array(
+    'empty_fields_handler' => '',
+    'empty_fields_emptyfieldtext_empty_text' => '',
+  );
+  $handler->display->display_options['fields']['field_cmr_phase']['delta_offset'] = '0';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['label'] = 'Coaching Fees';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => '',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => '$0.00',
+  );
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fees';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => '$0.00',
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_remarks']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_cmr_remarks']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Total Invoiced Amount';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Author uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
@@ -2640,6 +4295,648 @@ function whg_features_views_default_views() {
   $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['path'] = 'coach/cmr';
+
+  /* Display: Admin - Data export */
+  $handler = $view->new_display('views_data_export', 'Admin - Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
+  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_lastname_1']['label'] = 'Coach Last';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
+  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_firstname_1']['label'] = 'Coach First';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => '',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fee';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_remarks']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_cmr_remarks']['type'] = 'text_plain';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: User: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'users';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: User: Coach (field_user_coach) */
+  $handler->display->display_options['sorts']['field_user_coach_uid']['id'] = 'field_user_coach_uid';
+  $handler->display->display_options['sorts']['field_user_coach_uid']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['sorts']['field_user_coach_uid']['field'] = 'field_user_coach_uid';
+  $handler->display->display_options['sorts']['field_user_coach_uid']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['field_user_coach_uid']['expose']['label'] = 'Coach';
+  /* Sort criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['sorts']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
+  $handler->display->display_options['path'] = 'admin/cmr-summary/CMRs';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+    'page_1' => 0,
+  );
+
+  /* Display: Coach - CMR Summary export */
+  $handler = $view->new_display('views_data_export', 'Coach - CMR Summary export', 'views_data_export_2');
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    10 => '10',
+    9 => '9',
+    5 => '5',
+    11 => '11',
+  );
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['label'] = 'Service Level';
+  $handler->display->display_options['fields']['field_user_client_level']['settings'] = array(
+    'empty_fields_handler' => '',
+    'empty_fields_emptyfieldtext_empty_text' => '',
+  );
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['label'] = 'Date of Last Contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_status_code']['label'] = 'Code';
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_phase']['label'] = 'Phase(s) of Service';
+  $handler->display->display_options['fields']['field_cmr_phase']['delta_offset'] = '0';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['label'] = 'Coaching Fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => '',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => '',
+    'empty_fields_emptyfieldtext_empty_text' => '',
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_remarks']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_cmr_remarks']['type'] = 'text_plain';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: User: Last Name (field_user_lastname) */
+  $handler->display->display_options['sorts']['field_user_lastname_value']['id'] = 'field_user_lastname_value';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['sorts']['field_user_lastname_value']['field'] = 'field_user_lastname_value';
+  /* Sort criterion: User: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'users';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Author uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'node';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['path'] = 'coach/cmr-summary/CMRs';
+  $handler->display->display_options['displays'] = array(
+    'page_1' => 'page_1',
+    'default' => 0,
+    'page' => 0,
+  );
+
+  /* Display: Case Mgr CMR Summary Page */
+  $handler = $view->new_display('page', 'Case Mgr CMR Summary Page', 'page_2');
+  $handler->display->display_options['display_description'] = 'Admin Summary Filtered by Coaches assigned to CM';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    10 => '10',
+    5 => '5',
+  );
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'created' => 'created',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_lastname_1' => 'field_user_lastname_1',
+    'field_user_firstname_1' => 'field_user_firstname_1',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_cmr_service_started' => 'field_cmr_service_started',
+    'field_user_company' => 'field_user_company',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_cmr_last_contact' => 'field_cmr_last_contact',
+    'field_cmr_inactivation_date' => 'field_cmr_inactivation_date',
+    'field_cmr_status_code' => 'field_cmr_status_code',
+    'field_cmr_hours' => 'field_cmr_hours',
+    'field_cmr_phase' => 'field_cmr_phase',
+    'field_cmr_service_fee' => 'field_cmr_service_fee',
+    'field_ncf_coaching_fee_amount' => 'field_ncf_coaching_fee_amount',
+    'field_cmr_remarks' => 'field_cmr_remarks',
+  );
+  $handler->display->display_options['style_options']['default'] = 'created';
+  $handler->display->display_options['style_options']['info'] = array(
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_started' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_last_contact' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_inactivation_date' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_status_code' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_hours' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_phase' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_service_fee' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_coaching_fee_amount' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_remarks' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['sticky'] = TRUE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
+  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_lastname_1']['label'] = 'Coach Last';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
+  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_firstname_1']['label'] = 'Coach First';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Service Started */
+  $handler->display->display_options['fields']['field_cmr_service_started']['id'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['table'] = 'field_data_field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['field'] = 'field_cmr_service_started';
+  $handler->display->display_options['fields']['field_cmr_service_started']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_started']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  /* Field: Content: Last Contact */
+  $handler->display->display_options['fields']['field_cmr_last_contact']['id'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['table'] = 'field_data_field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['field'] = 'field_cmr_last_contact';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_last_contact']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Inactivation Date */
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['id'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['table'] = 'field_data_field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['field'] = 'field_cmr_inactivation_date';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_inactivation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Status Code */
+  $handler->display->display_options['fields']['field_cmr_status_code']['id'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['table'] = 'field_data_field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['field'] = 'field_cmr_status_code';
+  $handler->display->display_options['fields']['field_cmr_status_code']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Hours */
+  $handler->display->display_options['fields']['field_cmr_hours']['id'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['table'] = 'field_data_field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['field'] = 'field_cmr_hours';
+  $handler->display->display_options['fields']['field_cmr_hours']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Phase */
+  $handler->display->display_options['fields']['field_cmr_phase']['id'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['table'] = 'field_data_field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['field'] = 'field_cmr_phase';
+  $handler->display->display_options['fields']['field_cmr_phase']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  /* Field: Content: Service Fee */
+  $handler->display->display_options['fields']['field_cmr_service_fee']['id'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['table'] = 'field_data_field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['field'] = 'field_cmr_service_fee';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_service_fee']['settings'] = array(
+    'thousand_separator' => '',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fee';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: Content: Remarks */
+  $handler->display->display_options['fields']['field_cmr_remarks']['id'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['table'] = 'field_data_field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['field'] = 'field_cmr_remarks';
+  $handler->display->display_options['fields']['field_cmr_remarks']['relationship'] = 'reverse_field_cmr_associated_record_node';
+  $handler->display->display_options['fields']['field_cmr_remarks']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['path'] = 'case-manager/cmr-summary';
   $export['cmr_summary'] = $view;
 
   $view = new view();
@@ -2911,11 +5208,605 @@ function whg_features_views_default_views() {
   $handler->display->display_options['filters']['field_user_firstname_value']['operator'] = '!=';
   $handler->display->display_options['filters']['field_user_firstname_value']['value'] = 'NA';
   $handler->display->display_options['filters']['field_user_firstname_value']['group'] = 1;
-  $handler->display->display_options['path'] = 'contact-list';
+  $handler->display->display_options['path'] = 'admin/contact-list';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['path'] = 'admin/contact-list/csv';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
   $export['contact_list'] = $view;
+
+  $view = new view();
+  $view->name = 'non_coaching_related_fees';
+  $view->description = 'Non-Coaching Fees Summary';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'non_coaching_related_fees';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'non_coaching_related_fees';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'node';
+  /* Relationship: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['id'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['field'] = 'field_ncf_associated_record_uid';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Post date';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'non_coaching_fees' => 'non_coaching_fees',
+  );
+
+  /* Display: Coach N-C Fees */
+  $handler = $view->new_display('page', 'Coach N-C Fees', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Non-Coaching Fees Summary';
+  $handler->display->display_options['display_description'] = 'N-C Fees';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    10 => '10',
+    9 => '9',
+    11 => '11',
+  );
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_ncf_date_of_service' => 'field_ncf_date_of_service',
+    'field_ncf_coaching_fee_amount' => 'field_ncf_coaching_fee_amount',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_firstname' => 'field_user_firstname',
+    'created' => 'created',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_date_of_service' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_coaching_fee_amount' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-right',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found from query';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['id'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['field'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['delta'] = '-1';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: DATE OF SERVICE */
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['id'] = 'field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['table'] = 'field_data_field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['field'] = 'field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['label'] = 'Date of Service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fee';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['relationship'] = 'field_ncf_associated_record_uid';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['relationship'] = 'field_ncf_associated_record_uid';
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Post date';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: User: Uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'users';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'non_coaching_fees' => 'non_coaching_fees',
+  );
+  /* Filter criterion: Content: DATE OF SERVICE (field_ncf_date_of_service) */
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['id'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['table'] = 'field_data_field_ncf_date_of_service';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['field'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['operator_id'] = 'field_ncf_date_of_service_value_op';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['label'] = 'Date of Service';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['operator'] = 'field_ncf_date_of_service_value_op';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['identifier'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['remember_roles'] = array(
+    2 => 0,
+    9 => '9',
+    3 => '3',
+    10 => '10',
+    11 => '11',
+    1 => 0,
+    5 => 0,
+    8 => 0,
+  );
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['label'] = 'Date of Service (field_ncf_date_of_service)';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['identifier'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['remember'] = FALSE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['group_items'] = array(
+    1 => array(),
+    2 => array(),
+    3 => array(),
+  );
+  $handler->display->display_options['path'] = 'coach/non-coaching-related-fees';
+
+  /* Display: Administrator N-C Fees */
+  $handler = $view->new_display('page', 'Administrator N-C Fees', 'page_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Non-Coaching Fees Summary';
+  $handler->display->display_options['display_description'] = 'N-C Fees Summary';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+  );
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'name' => 'name',
+    'title' => 'title',
+    'field_cmr_associated_record' => 'field_cmr_associated_record',
+    'field_ncf_date_of_service' => 'field_ncf_date_of_service',
+    'changed' => 'changed',
+    'nid' => 'nid',
+    'field_ncf_coaching_fee_amount' => 'field_ncf_coaching_fee_amount',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_ncf_date_of_service';
+  $handler->display->display_options['style_options']['info'] = array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cmr_associated_record' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_date_of_service' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_ncf_coaching_fee_amount' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results from query';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['id'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['field'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['delta'] = '-1';
+  /* Relationship: Content: Author */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Relationship: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid_1']['id'] = 'field_ncf_associated_record_uid_1';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid_1']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid_1']['field'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid_1']['delta'] = '-1';
+  /* Relationship: User: Coach (field_user_coach) - reverse */
+  $handler->display->display_options['relationships']['reverse_field_user_coach_user']['id'] = 'reverse_field_user_coach_user';
+  $handler->display->display_options['relationships']['reverse_field_user_coach_user']['table'] = 'users';
+  $handler->display->display_options['relationships']['reverse_field_user_coach_user']['field'] = 'reverse_field_user_coach_user';
+  $handler->display->display_options['relationships']['reverse_field_user_coach_user']['relationship'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Submitted By';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Associated Record */
+  $handler->display->display_options['fields']['field_cmr_associated_record']['id'] = 'field_cmr_associated_record';
+  $handler->display->display_options['fields']['field_cmr_associated_record']['table'] = 'field_data_field_cmr_associated_record';
+  $handler->display->display_options['fields']['field_cmr_associated_record']['field'] = 'field_cmr_associated_record';
+  /* Field: Content: DATE OF SERVICE */
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['id'] = 'field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['table'] = 'field_data_field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['field'] = 'field_ncf_date_of_service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['label'] = 'Date of Service';
+  $handler->display->display_options['fields']['field_ncf_date_of_service']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'short';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['alter']['text'] = '!2';
+  /* Field: Content: Non-Coaching Fee Amount */
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['id'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['field'] = 'field_ncf_coaching_fee_amount';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['label'] = 'Non-Coaching Fee';
+  $handler->display->display_options['fields']['field_ncf_coaching_fee_amount']['settings'] = array(
+    'thousand_separator' => ',',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: User: Uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'users';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['id'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['field'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_ncf_associated_record_uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'non_coaching_fees' => 'non_coaching_fees',
+  );
+  /* Filter criterion: Content: Non-Coaching Fee Amount (field_ncf_coaching_fee_amount) */
+  $handler->display->display_options['filters']['field_ncf_coaching_fee_amount_value']['id'] = 'field_ncf_coaching_fee_amount_value';
+  $handler->display->display_options['filters']['field_ncf_coaching_fee_amount_value']['table'] = 'field_data_field_ncf_coaching_fee_amount';
+  $handler->display->display_options['filters']['field_ncf_coaching_fee_amount_value']['field'] = 'field_ncf_coaching_fee_amount_value';
+  $handler->display->display_options['filters']['field_ncf_coaching_fee_amount_value']['operator'] = 'not empty';
+  $handler->display->display_options['path'] = 'admin/non_coaching_related_fees';
+
+  /* Display: Case Manager N-C Fees */
+  $handler = $view->new_display('page', 'Case Manager N-C Fees', 'page_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Non-Coaching Fees Summary';
+  $handler->display->display_options['display_description'] = 'N-C Fees';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    10 => '10',
+    9 => '9',
+    11 => '11',
+  );
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results from this query';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: Associated Record (field_ncf_associated_record) */
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['id'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['table'] = 'field_data_field_ncf_associated_record';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['field'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['relationships']['field_ncf_associated_record_uid']['delta'] = '-1';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['relationship'] = 'field_ncf_associated_record_uid';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['relationship'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: User: Case Manager (field_user_case_manager) */
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['id'] = 'field_user_case_manager_uid';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['table'] = 'field_data_field_user_case_manager';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['field'] = 'field_user_case_manager_uid';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['relationship'] = 'field_ncf_associated_record_uid';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_user_case_manager_uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'non_coaching_fees' => 'non_coaching_fees',
+  );
+  /* Filter criterion: Content: DATE OF SERVICE (field_ncf_date_of_service) */
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['id'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['table'] = 'field_data_field_ncf_date_of_service';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['field'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['operator_id'] = 'field_ncf_date_of_service_value_op';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['label'] = 'Date of Service';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['operator'] = 'field_ncf_date_of_service_value_op';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['identifier'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['expose']['remember_roles'] = array(
+    2 => 0,
+    9 => '9',
+    3 => '3',
+    10 => '10',
+    11 => '11',
+    1 => 0,
+    5 => 0,
+    8 => 0,
+  );
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['label'] = 'Date of Service (field_ncf_date_of_service)';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['identifier'] = 'field_ncf_date_of_service_value';
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['remember'] = FALSE;
+  $handler->display->display_options['filters']['field_ncf_date_of_service_value']['group_info']['group_items'] = array(
+    1 => array(),
+    2 => array(),
+    3 => array(),
+  );
+  $handler->display->display_options['path'] = 'case-manager/non-coaching-related-fees';
+  $export['non_coaching_related_fees'] = $view;
 
   $view = new view();
   $view->name = 'user_snapshot';
@@ -2996,7 +5887,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -3018,17 +5909,18 @@ function whg_features_views_default_views() {
   $handler->display->display_options['fields']['login']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['login']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['login']['date_format'] = 'time ago';
-  /* Field: User: Follow-Up */
+  /* Field: User: Needs Follow-Up? */
   $handler->display->display_options['fields']['field_user_follow_up']['id'] = 'field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['table'] = 'field_data_field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['field'] = 'field_user_follow_up';
   $handler->display->display_options['fields']['field_user_follow_up']['label'] = '';
   $handler->display->display_options['fields']['field_user_follow_up']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_user_follow_up']['hide_empty'] = TRUE;
-  /* Field: User: Follow-Up Notes */
+  /* Field: User: Notes to Record */
   $handler->display->display_options['fields']['field_user_follow_up_notes']['id'] = 'field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['table'] = 'field_data_field_user_follow_up_notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['field'] = 'field_user_follow_up_notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['label'] = 'Follow-Up Notes';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['element_type'] = 'em';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['element_label_type'] = 'strong';
   $handler->display->display_options['fields']['field_user_follow_up_notes']['hide_empty'] = TRUE;
@@ -3070,23 +5962,33 @@ function whg_features_views_default_views() {
 
   /* Display: User Snapshot Block */
   $handler = $view->new_display('block', 'User Snapshot Block', 'block');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
     'name' => 'name',
     'field_user_coach' => 'field_user_coach',
     'field_user_company' => 'field_user_company',
     'field_user_client_level' => 'field_user_client_level',
-    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_assignment_date' => 'field_user_assignment_date',
     'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'login' => 'login',
     'field_user_follow_up' => 'field_user_follow_up',
     'field_user_follow_up_notes' => 'field_user_follow_up_notes',
-    'login' => 'login',
     'field_user_client_id' => 'field_user_client_id',
-    'uid' => 'uid',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 1,
+    ),
     'name' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -3115,7 +6017,7 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_worksheet_received' => array(
+    'field_user_assignment_date' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-center',
@@ -3123,6 +6025,13 @@ function whg_features_views_default_views() {
       'empty_column' => 0,
     ),
     'field_user_waiver_auth_received' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'login' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-center',
@@ -3143,21 +6052,7 @@ function whg_features_views_default_views() {
       'separator' => '',
       'empty_column' => 1,
     ),
-    'login' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => 'views-align-center',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'field_user_client_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => 'views-align-center',
-      'separator' => '',
-      'empty_column' => 1,
-    ),
-    'uid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-center',
@@ -3168,8 +6063,199 @@ function whg_features_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'ID#';
+  $handler->display->display_options['fields']['uid']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['uid']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['uid']['empty_zero'] = TRUE;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Client Username';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_type'] = 'h6';
+  $handler->display->display_options['fields']['name']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_default_classes'] = FALSE;
+  /* Field: User: Coach */
+  $handler->display->display_options['fields']['field_user_coach']['id'] = 'field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['table'] = 'field_data_field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['field'] = 'field_user_coach';
+  $handler->display->display_options['fields']['field_user_coach']['label'] = '';
+  $handler->display->display_options['fields']['field_user_coach']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_user_coach']['element_label_type'] = 'h5';
+  $handler->display->display_options['fields']['field_user_coach']['element_label_colon'] = FALSE;
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['element_label_type'] = 'strong';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['label'] = 'Service Level';
+  $handler->display->display_options['fields']['field_user_client_level']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_user_client_level']['settings'] = array(
+    'empty_fields_handler' => 'EmptyFieldText',
+    'empty_fields_emptyfieldtext_empty_text' => ' ',
+  );
+  /* Field: User: Assignment Date */
+  $handler->display->display_options['fields']['field_user_assignment_date']['id'] = 'field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['table'] = 'field_data_field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['field'] = 'field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['label'] = 'Assigned';
+  $handler->display->display_options['fields']['field_user_assignment_date']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_user_assignment_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['label'] = 'Waiver/Authorization';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Last login */
+  $handler->display->display_options['fields']['login']['id'] = 'login';
+  $handler->display->display_options['fields']['login']['table'] = 'users';
+  $handler->display->display_options['fields']['login']['field'] = 'login';
+  $handler->display->display_options['fields']['login']['label'] = 'Last Login';
+  $handler->display->display_options['fields']['login']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['login']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['login']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['login']['date_format'] = 'time ago';
+  /* Field: User: Needs Follow-Up? */
+  $handler->display->display_options['fields']['field_user_follow_up']['id'] = 'field_user_follow_up';
+  $handler->display->display_options['fields']['field_user_follow_up']['table'] = 'field_data_field_user_follow_up';
+  $handler->display->display_options['fields']['field_user_follow_up']['field'] = 'field_user_follow_up';
+  $handler->display->display_options['fields']['field_user_follow_up']['label'] = '';
+  $handler->display->display_options['fields']['field_user_follow_up']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_user_follow_up']['hide_empty'] = TRUE;
+  /* Field: User: Notes to Record */
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['id'] = 'field_user_follow_up_notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['table'] = 'field_data_field_user_follow_up_notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['field'] = 'field_user_follow_up_notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['label'] = 'Follow-Up Notes';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['element_type'] = 'em';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_user_follow_up_notes']['hide_empty'] = TRUE;
+  /* Field: User: Client ID */
+  $handler->display->display_options['fields']['field_user_client_id']['id'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['table'] = 'field_data_field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['field'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['label'] = 'D6 Client ID';
+  $handler->display->display_options['fields']['field_user_client_id']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_user_client_id']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_user_client_id']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['field_user_client_id']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['field_user_client_id']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+    'empty_fields_handler' => '',
+    'empty_fields_emptyfieldtext_empty_text' => '',
+  );
   $handler->display->display_options['block_description'] = 'CMR Client Info Block';
   $export['user_snapshot'] = $view;
+
+  $view = new view();
+  $view->name = 'webform_submissions';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'webform_submissions';
+  $view->human_name = 'Webform Submissions';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Webform Submissions';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['style_plugin'] = 'table';
+  /* Field: Webform submissions: Sid */
+  $handler->display->display_options['fields']['sid']['id'] = 'sid';
+  $handler->display->display_options['fields']['sid']['table'] = 'webform_submissions';
+  $handler->display->display_options['fields']['sid']['field'] = 'sid';
+
+  /* Display: Webform Submissions */
+  $handler = $view->new_display('page', 'Webform Submissions', 'page');
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Webform submissions: Node */
+  $handler->display->display_options['relationships']['nid']['id'] = 'nid';
+  $handler->display->display_options['relationships']['nid']['table'] = 'webform_submissions';
+  $handler->display->display_options['relationships']['nid']['field'] = 'nid';
+  /* Relationship: Webform submissions: User */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'webform_submissions';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Webform: Webform results link */
+  $handler->display->display_options['fields']['webform_results']['id'] = 'webform_results';
+  $handler->display->display_options['fields']['webform_results']['table'] = 'node';
+  $handler->display->display_options['fields']['webform_results']['field'] = 'webform_results';
+  $handler->display->display_options['fields']['webform_results']['text'] = 'Results';
+  /* Field: Webform submissions: Sid */
+  $handler->display->display_options['fields']['sid']['id'] = 'sid';
+  $handler->display->display_options['fields']['sid']['table'] = 'webform_submissions';
+  $handler->display->display_options['fields']['sid']['field'] = 'sid';
+  $handler->display->display_options['fields']['sid']['separator'] = '';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['relationship'] = 'uid';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['relationship'] = 'uid';
+  /* Field: Webform submissions: View link */
+  $handler->display->display_options['fields']['view_submission']['id'] = 'view_submission';
+  $handler->display->display_options['fields']['view_submission']['table'] = 'webform_submissions';
+  $handler->display->display_options['fields']['view_submission']['field'] = 'view_submission';
+  $handler->display->display_options['fields']['view_submission']['element_label_colon'] = FALSE;
+  /* Field: Webform submissions: Draft */
+  $handler->display->display_options['fields']['is_draft']['id'] = 'is_draft';
+  $handler->display->display_options['fields']['is_draft']['table'] = 'webform_submissions';
+  $handler->display->display_options['fields']['is_draft']['field'] = 'is_draft';
+  /* Field: Webform submissions: Submitted */
+  $handler->display->display_options['fields']['submitted']['id'] = 'submitted';
+  $handler->display->display_options['fields']['submitted']['table'] = 'webform_submissions';
+  $handler->display->display_options['fields']['submitted']['field'] = 'submitted';
+  $handler->display->display_options['fields']['submitted']['date_format'] = 'short';
+  /* Field: User: Webform submission count */
+  $handler->display->display_options['fields']['webform_submission_count_user']['id'] = 'webform_submission_count_user';
+  $handler->display->display_options['fields']['webform_submission_count_user']['table'] = 'users';
+  $handler->display->display_options['fields']['webform_submission_count_user']['field'] = 'webform_submission_count_user';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  $handler->display->display_options['path'] = 'webform-submissions';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Webform Submissions';
+  $handler->display->display_options['menu']['name'] = 'menu-coach-menu';
+  $export['webform_submissions'] = $view;
 
   $view = new view();
   $view->name = 'working';
@@ -3391,7 +6477,7 @@ function whg_features_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: User: Waiver Authorization Received */
+  /* Field: User: Waiver Received */
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
   $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
@@ -3527,6 +6613,308 @@ function whg_features_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
+    'field_user_client_id' => 'field_user_client_id',
+    'field_user_lastname' => 'field_user_lastname',
+    'field_user_firstname' => 'field_user_firstname',
+    'field_user_worksheet_received' => 'field_user_worksheet_received',
+    'field_user_waiver_auth_received' => 'field_user_waiver_auth_received',
+    'field_user_letter_presented' => 'field_user_letter_presented',
+    'field_user_separation_date' => 'field_user_separation_date',
+    'field_user_assignment_date' => 'field_user_assignment_date',
+    'field_user_language' => 'field_user_language',
+    'field_user_firstname_1' => 'field_user_firstname_1',
+    'field_user_lastname_1' => 'field_user_lastname_1',
+    'field_user_department' => 'field_user_department',
+    'field_user_region' => 'field_user_region',
+    'field_user_company' => 'field_user_company',
+    'field_user_client_level' => 'field_user_client_level',
+    'field_user_client_eid' => 'field_user_client_eid',
+    'field_user_alt_phone' => 'field_user_alt_phone',
+    'field_user_phone' => 'field_user_phone',
+  );
+  $handler->display->display_options['style_options']['default'] = 'uid';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_worksheet_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_waiver_auth_received' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_letter_presented' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_separation_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_assignment_date' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_language' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_firstname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lastname_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_department' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_region' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_company' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_level' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_client_eid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_alt_phone' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_phone' => array(
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'UID';
+  /* Field: User: Client ID */
+  $handler->display->display_options['fields']['field_user_client_id']['id'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['table'] = 'field_data_field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['field'] = 'field_user_client_id';
+  $handler->display->display_options['fields']['field_user_client_id']['label'] = 'D6 Client ID';
+  $handler->display->display_options['fields']['field_user_client_id']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+  );
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname']['id'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname']['hide_empty'] = TRUE;
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname']['id'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname']['field'] = 'field_user_firstname';
+  /* Field: User: Worksheet Received */
+  $handler->display->display_options['fields']['field_user_worksheet_received']['id'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['table'] = 'field_data_field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['field'] = 'field_user_worksheet_received';
+  $handler->display->display_options['fields']['field_user_worksheet_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Waiver Received */
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['id'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['table'] = 'field_data_field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['field'] = 'field_user_waiver_auth_received';
+  $handler->display->display_options['fields']['field_user_waiver_auth_received']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Letter Presented */
+  $handler->display->display_options['fields']['field_user_letter_presented']['id'] = 'field_user_letter_presented';
+  $handler->display->display_options['fields']['field_user_letter_presented']['table'] = 'field_data_field_user_letter_presented';
+  $handler->display->display_options['fields']['field_user_letter_presented']['field'] = 'field_user_letter_presented';
+  $handler->display->display_options['fields']['field_user_letter_presented']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Separation Date */
+  $handler->display->display_options['fields']['field_user_separation_date']['id'] = 'field_user_separation_date';
+  $handler->display->display_options['fields']['field_user_separation_date']['table'] = 'field_data_field_user_separation_date';
+  $handler->display->display_options['fields']['field_user_separation_date']['field'] = 'field_user_separation_date';
+  $handler->display->display_options['fields']['field_user_separation_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Assignment Date */
+  $handler->display->display_options['fields']['field_user_assignment_date']['id'] = 'field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['table'] = 'field_data_field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['field'] = 'field_user_assignment_date';
+  $handler->display->display_options['fields']['field_user_assignment_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: User: Language */
+  $handler->display->display_options['fields']['field_user_language']['id'] = 'field_user_language';
+  $handler->display->display_options['fields']['field_user_language']['table'] = 'field_data_field_user_language';
+  $handler->display->display_options['fields']['field_user_language']['field'] = 'field_user_language';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_user_firstname_1']['id'] = 'field_user_firstname_1';
+  $handler->display->display_options['fields']['field_user_firstname_1']['table'] = 'field_data_field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['field'] = 'field_user_firstname';
+  $handler->display->display_options['fields']['field_user_firstname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_firstname_1']['label'] = 'Coach First';
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_user_lastname_1']['id'] = 'field_user_lastname_1';
+  $handler->display->display_options['fields']['field_user_lastname_1']['table'] = 'field_data_field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['field'] = 'field_user_lastname';
+  $handler->display->display_options['fields']['field_user_lastname_1']['relationship'] = 'field_user_coach_uid';
+  $handler->display->display_options['fields']['field_user_lastname_1']['label'] = 'Coach Last';
+  /* Field: User: Department */
+  $handler->display->display_options['fields']['field_user_department']['id'] = 'field_user_department';
+  $handler->display->display_options['fields']['field_user_department']['table'] = 'field_data_field_user_department';
+  $handler->display->display_options['fields']['field_user_department']['field'] = 'field_user_department';
+  $handler->display->display_options['fields']['field_user_department']['label'] = 'Dept #';
+  /* Field: User: Region */
+  $handler->display->display_options['fields']['field_user_region']['id'] = 'field_user_region';
+  $handler->display->display_options['fields']['field_user_region']['table'] = 'field_data_field_user_region';
+  $handler->display->display_options['fields']['field_user_region']['field'] = 'field_user_region';
+  /* Field: User: Company */
+  $handler->display->display_options['fields']['field_user_company']['id'] = 'field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['table'] = 'field_data_field_user_company';
+  $handler->display->display_options['fields']['field_user_company']['field'] = 'field_user_company';
+  /* Field: User: Client Level */
+  $handler->display->display_options['fields']['field_user_client_level']['id'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['table'] = 'field_data_field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['field'] = 'field_user_client_level';
+  $handler->display->display_options['fields']['field_user_client_level']['label'] = 'Level';
+  /* Field: User: Client EID */
+  $handler->display->display_options['fields']['field_user_client_eid']['id'] = 'field_user_client_eid';
+  $handler->display->display_options['fields']['field_user_client_eid']['table'] = 'field_data_field_user_client_eid';
+  $handler->display->display_options['fields']['field_user_client_eid']['field'] = 'field_user_client_eid';
+  $handler->display->display_options['fields']['field_user_client_eid']['label'] = 'EID';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    8 => '8',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  /* Filter criterion: User: Created date */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'users';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['operator'] = '>=';
+  $handler->display->display_options['filters']['created']['value']['value'] = '2013-05-16';
+  $handler->display->display_options['filters']['created']['group'] = 1;
   $handler->display->display_options['path'] = 'administrator/working';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Working - New Clients';

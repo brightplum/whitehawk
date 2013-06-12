@@ -38,7 +38,7 @@ function whg_features_field_group_info() {
         'description' => '',
         'show_label' => '1',
         'label_element' => 'h3',
-        'effect' => 'none',
+        'effect' => 'blind',
         'speed' => 'fast',
       ),
       'formatter' => 'open',
@@ -66,18 +66,13 @@ function whg_features_field_group_info() {
       4 => 'field_user_gender',
       5 => 'field_user_language',
     ),
-    'format_type' => 'div',
+    'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Client Contact Info',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
-        'classes' => '',
         'description' => '',
-        'show_label' => '1',
-        'label_element' => 'h3',
-        'effect' => 'none',
-        'speed' => 'fast',
+        'classes' => '',
       ),
-      'formatter' => 'open',
     ),
   );
   $export['group_1|user|user|full'] = $field_group;
@@ -120,6 +115,30 @@ function whg_features_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_3|user|user|full';
+  $field_group->group_name = 'group_3';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Case Management',
+    'weight' => '6',
+    'children' => array(),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+      ),
+    ),
+  );
+  $export['group_3|user|user|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_4|user|user|full';
   $field_group->group_name = 'group_4';
   $field_group->entity_type = 'user';
@@ -135,17 +154,14 @@ function whg_features_field_group_info() {
       2 => 'field_user_case_manager',
       3 => 'group_a7',
     ),
-    'format_type' => 'hidden',
+    'format_type' => 'fieldset',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Admin Use Only',
       'instance_settings' => array(
-        'description' => '',
-        'show_label' => 1,
-        'label_element' => 'h3',
-        'effect' => 'none',
-        'speed' => 'fast',
         'classes' => '',
+        'description' => 'These fields pertain to COACH records only.  It mostly contains old bio data from pre-Drupal use.  None of this data is relevant to a CLIENT record.',
       ),
+      'formatter' => 'collapsed',
     ),
   );
   $export['group_4|user|user|full'] = $field_group;
@@ -179,7 +195,7 @@ function whg_features_field_group_info() {
         'effect' => 'none',
         'speed' => 'fast',
       ),
-      'formatter' => 'collapsible',
+      'formatter' => 'collapsed',
     ),
   );
   $export['group_5|user|user|full'] = $field_group;
@@ -210,6 +226,35 @@ function whg_features_field_group_info() {
     ),
     'format_type' => 'div',
     'format_settings' => array(
+      'label' => 'Accounting Detail',
+      'instance_settings' => array(
+        'classes' => '',
+        'description' => '',
+        'show_label' => '1',
+        'label_element' => 'h3',
+        'effect' => 'blind',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'collapsible',
+    ),
+  );
+  $export['group_a1|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_a2|user|user|default';
+  $field_group->group_name = 'group_a2';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Case Management',
+    'weight' => '7',
+    'children' => array(),
+    'format_type' => 'div',
+    'format_settings' => array(
       'formatter' => 'collapsible',
       'instance_settings' => array(
         'description' => '',
@@ -221,7 +266,7 @@ function whg_features_field_group_info() {
       ),
     ),
   );
-  $export['group_a1|user|user|default'] = $field_group;
+  $export['group_a2|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -310,7 +355,7 @@ function whg_features_field_group_info() {
   $field_group->parent_name = 'group_user_coach_addl_info';
   $field_group->data = array(
     'label' => 'Bio Fields',
-    'weight' => '21',
+    'weight' => '22',
     'children' => array(
       0 => 'field_user_coach_designation',
       1 => 'field_user_coach_biography',
@@ -353,7 +398,7 @@ function whg_features_field_group_info() {
       'label' => 'Notes',
       'instance_settings' => array(
         'classes' => '',
-        'description' => '',
+        'description' => ' ',
       ),
       'formatter' => 'open',
     ),
@@ -376,11 +421,15 @@ function whg_features_field_group_info() {
       0 => 'field_user_follow_up',
       1 => 'field_user_follow_up_notes',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'div',
     'format_settings' => array(
       'formatter' => 'collapsible',
       'instance_settings' => array(
         'description' => '',
+        'show_label' => 1,
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
         'classes' => '',
       ),
     ),
@@ -411,7 +460,7 @@ function whg_features_field_group_info() {
       8 => 'field_user_fax',
       9 => 'field_user_coach_membership',
     ),
-    'format_type' => 'hidden',
+    'format_type' => 'fieldset',
     'format_settings' => array(
       'label' => 'Coach Bios',
       'instance_settings' => array(
@@ -438,7 +487,6 @@ function whg_features_field_group_info() {
     'children' => array(
       0 => 'field_user_coach',
       1 => 'field_user_client_id',
-      2 => 'field_client_username_',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -466,20 +514,19 @@ function whg_features_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Client Record for:',
+    'label' => ' Client Record for:',
     'weight' => '0',
     'children' => array(
       0 => 'field_user_coach',
       1 => 'field_user_client_id',
-      2 => 'field_client_username_',
     ),
     'format_type' => 'div',
     'format_settings' => array(
-      'label' => 'Client Record for:',
+      'label' => ' Client Record for:',
       'instance_settings' => array(
         'classes' => '',
         'description' => '',
-        'show_label' => '1',
+        'show_label' => '0',
         'label_element' => 'h3',
         'effect' => 'none',
         'speed' => 'fast',
@@ -513,18 +560,15 @@ function whg_features_field_group_info() {
       8 => 'field_user_department',
       9 => 'field_user_company',
     ),
-    'format_type' => 'div',
+    'format_type' => 'fieldset',
     'format_settings' => array(
-      'formatter' => 'open',
+      'label' => 'Accounting Detail',
       'instance_settings' => array(
-        'description' => '',
-        'show_label' => 1,
-        'label_element' => 'h3',
-        'effect' => 'none',
-        'speed' => 'fast',
-        'classes' => '',
         'required_fields' => 1,
+        'classes' => '',
+        'description' => '',
       ),
+      'formatter' => 'collapsible',
     ),
   );
   $export['group_user_acct_detail_group|user|user|form'] = $field_group;
@@ -539,19 +583,20 @@ function whg_features_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Additional Coach Information',
+    'label' => 'Additional Information',
     'weight' => '12',
     'children' => array(
-      0 => 'field_user_case_manager',
-      1 => 'group_a6',
+      0 => 'field_user_personal_email',
+      1 => 'field_user_case_manager',
+      2 => 'group_a6',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Additional Coach Information',
+      'label' => 'Additional Information',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => '',
-        'description' => '',
+        'description' => 'These fields are not intended for use with Client records.  They are remnants of old bio pages and are for Coach records only.',
       ),
       'formatter' => 'collapsed',
     ),
@@ -577,22 +622,18 @@ function whg_features_field_group_info() {
       3 => 'field_user_phone',
       4 => 'field_user_gender',
       5 => 'field_user_language',
-      6 => 'field_user_personal_email',
-      7 => 'field_user_alt_phone',
-      8 => 'field_user_fax',
+      6 => 'field_user_alt_phone',
+      7 => 'field_user_fax',
     ),
-    'format_type' => 'div',
+    'format_type' => 'fieldset',
     'format_settings' => array(
-      'formatter' => 'open',
+      'label' => 'Contact Info',
       'instance_settings' => array(
-        'description' => '',
-        'show_label' => 1,
-        'label_element' => 'h3',
-        'effect' => 'none',
-        'speed' => 'fast',
-        'classes' => '',
         'required_fields' => 1,
+        'classes' => '',
+        'description' => '',
       ),
+      'formatter' => 'open',
     ),
   );
   $export['group_user_contact_info_group|user|user|form'] = $field_group;

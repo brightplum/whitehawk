@@ -12,6 +12,10 @@ function whg_features_ctools_plugin_api() {
   if ($module == "bean_admin_ui" && $api == "bean") {
     return array("version" => "5");
   }
+  list($module, $api) = func_get_args();
+  if ($module == "field_group" && $api == "field_group") {
+    return array("version" => "1");
+  }
 }
 
 /**

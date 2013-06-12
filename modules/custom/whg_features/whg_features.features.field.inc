@@ -46,7 +46,10 @@ function whg_features_field_default_fields() {
         'default' => array(
           'label' => 'hidden',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '0',
         ),
@@ -110,7 +113,10 @@ function whg_features_field_default_fields() {
         'default' => array(
           'label' => 'above',
           'module' => 'file',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'file_default',
           'weight' => 1,
         ),
@@ -134,78 +140,6 @@ function whg_features_field_default_fields() {
         ),
         'type' => 'file_generic',
         'weight' => '-2',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-cmr-body'.
-  $fields['node-cmr-body'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(
-        0 => 'node',
-      ),
-      'field_name' => 'body',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'text_with_summary',
-    ),
-    'field_instance' => array(
-      'bundle' => 'cmr',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '1',
-        ),
-        'teaser' => array(
-          'label' => 'hidden',
-          'module' => 'text',
-          'settings' => array(
-            'trim_length' => 600,
-          ),
-          'type' => 'text_summary_or_trimmed',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'body',
-      'label' => 'Body',
-      'required' => FALSE,
-      'settings' => array(
-        'display_summary' => TRUE,
-        'text_processing' => 1,
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'text',
-        'settings' => array(
-          'rows' => 20,
-          'summary_rows' => 5,
-        ),
-        'type' => 'text_textarea_with_summary',
-        'weight' => '2',
       ),
     ),
   );
@@ -261,10 +195,13 @@ function whg_features_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'user_reference',
-          'settings' => array(),
-          'type' => 'user_reference_uid',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'user_reference_default',
           'weight' => '0',
         ),
         'teaser' => array(
@@ -396,9 +333,12 @@ function whg_features_field_default_fields() {
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
-          'weight' => '2',
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -453,12 +393,14 @@ function whg_features_field_default_fields() {
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'prefix_suffix' => 0,
             'scale' => '2',
             'thousand_separator' => '',
           ),
           'type' => 'number_decimal',
-          'weight' => '7',
+          'weight' => '6',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -506,7 +448,7 @@ function whg_features_field_default_fields() {
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 'minute',
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -533,6 +475,8 @@ function whg_features_field_default_fields() {
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -540,7 +484,7 @@ function whg_features_field_default_fields() {
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => '5',
+          'weight' => '4',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -595,7 +539,7 @@ function whg_features_field_default_fields() {
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 'minute',
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -616,6 +560,8 @@ function whg_features_field_default_fields() {
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -623,7 +569,7 @@ function whg_features_field_default_fields() {
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => '4',
+          'weight' => '3',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -664,7 +610,7 @@ function whg_features_field_default_fields() {
   $fields['node-cmr-field_cmr_phase'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_cmr_phase',
@@ -701,9 +647,12 @@ function whg_features_field_default_fields() {
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
-          'weight' => '8',
+          'weight' => '7',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -770,7 +719,10 @@ function whg_features_field_default_fields() {
         'default' => array(
           'label' => 'above',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '10',
         ),
@@ -830,12 +782,14 @@ function whg_features_field_default_fields() {
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'prefix_suffix' => 1,
             'scale' => '2',
             'thousand_separator' => ',',
           ),
           'type' => 'number_decimal',
-          'weight' => '9',
+          'weight' => '8',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -883,7 +837,7 @@ function whg_features_field_default_fields() {
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 'minute',
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -904,6 +858,8 @@ function whg_features_field_default_fields() {
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -911,7 +867,7 @@ function whg_features_field_default_fields() {
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => '3',
+          'weight' => '2',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -925,7 +881,7 @@ function whg_features_field_default_fields() {
       'label' => 'Service Started',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
@@ -966,12 +922,12 @@ function whg_features_field_default_fields() {
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
-          'A' => 'A',
-          'A-H' => 'A-H',
           'NA' => 'NA',
           'NC' => 'NC',
           'PN' => 'PN',
           'PN-A' => 'PN-A',
+          'A' => 'A',
+          'A-H' => 'A-H',
           'A-1' => 'A-1',
           'PN-4' => 'PN-4',
           'PN-5' => 'PN-5',
@@ -989,15 +945,19 @@ function whg_features_field_default_fields() {
     ),
     'field_instance' => array(
       'bundle' => 'cmr',
-      'default_value' => NULL,
+      'default_value' => array(
+        0 => array(
+          'value' => 'NA',
+        ),
+      ),
       'deleted' => '0',
       'description' => '<strong>Code Definitions:</strong>
-A	= Active<br/>
-A-H	= Active-Hold<br/>
 NA = Not Assigned - Administrative Use Only<br/>
 NC = New Client<br/>
 PN = Post Notification<br/>
 PN-A = Post Notification-Active<br/>
+A	= Active<br/>
+A-H	= Active-Hold<br/>
 A-1	= Active-Goal Attained<br/>
 PN-4 = Post Notification-Client Declines Services<br/>
 PN-5 = Post Notification-Reabsorbed<br/>
@@ -1011,9 +971,12 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
-          'weight' => '6',
+          'weight' => '5',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1069,6 +1032,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           5 => 0,
           8 => 0,
           9 => 0,
+          10 => 0,
+          11 => 0,
         ),
         'referenceable_status' => array(
           0 => 0,
@@ -1092,9 +1057,12 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'above',
           'module' => 'user_reference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'user_reference_default',
-          'weight' => 1,
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1106,7 +1074,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'entity_type' => 'node',
       'field_name' => 'field_ncf_associated_record',
       'label' => 'Associated Record',
-      'required' => 0,
+      'required' => 1,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
@@ -1155,12 +1123,14 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
-            'prefix_suffix' => TRUE,
-            'scale' => 2,
-            'thousand_separator' => ' ',
+            'empty_fields_emptyfieldtext_empty_text' => '$0.00',
+            'empty_fields_handler' => 'EmptyFieldText',
+            'prefix_suffix' => 1,
+            'scale' => '2',
+            'thousand_separator' => ',',
           ),
           'type' => 'number_decimal',
-          'weight' => 4,
+          'weight' => '4',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1171,8 +1141,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       ),
       'entity_type' => 'node',
       'field_name' => 'field_ncf_coaching_fee_amount',
-      'label' => 'Coaching Fee Amount',
-      'required' => 0,
+      'label' => 'Non-Coaching Fee Amount',
+      'required' => 1,
       'settings' => array(
         'max' => '',
         'min' => '',
@@ -1229,14 +1199,16 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'above',
           'module' => 'date',
           'settings' => array(
-            'format_type' => 'long',
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+            'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
             'multiple_number' => '',
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => 2,
+          'weight' => '2',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1247,10 +1219,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       ),
       'entity_type' => 'node',
       'field_name' => 'field_ncf_date_of_service',
-      'label' => 'Date of Service',
-      'required' => 0,
+      'label' => 'DATE OF SERVICE',
+      'required' => 1,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
@@ -1263,7 +1235,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -1309,9 +1281,12 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'above',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
-          'weight' => 3,
+          'weight' => '3',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1378,7 +1353,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'hidden',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '0',
         ),
@@ -1386,6 +1364,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'trim_length' => 600,
           ),
           'type' => 'text_summary_or_trimmed',
@@ -1483,7 +1463,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'hidden',
           'module' => 'blockreference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'blockreference_default',
           'weight' => '1',
         ),
@@ -1619,7 +1602,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'above',
           'module' => 'file',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'file_default',
           'weight' => 5,
         ),
@@ -1787,7 +1773,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'hidden',
           'module' => 'blockreference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'blockreference_default',
           'weight' => '2',
         ),
@@ -1854,6 +1843,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'addressfield',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_handlers' => array(
               0 => 'address',
             ),
@@ -1866,8 +1857,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'addressfield',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry by coach',
+            'empty_fields_handler' => 'EmptyFieldText',
             'format_handlers' => array(
-              0 => 'address',
+              'address' => 'address',
             ),
             'use_widget_handlers' => 1,
           ),
@@ -1880,7 +1873,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Address',
       'required' => 0,
       'settings' => array(
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -2187,14 +2180,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '16',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '24',
         ),
       ),
@@ -2257,6 +2257,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -2270,6 +2272,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -2285,11 +2289,11 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Assignment Date',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -2298,7 +2302,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -2363,14 +2367,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'user_reference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'user_reference_default',
           'weight' => '20',
         ),
         'full' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
+          'label' => 'inline',
+          'module' => 'user_reference',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'user_reference_default',
           'weight' => '19',
         ),
       ),
@@ -2429,14 +2440,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '13',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '11',
         ),
@@ -2488,6 +2505,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'prefix_suffix' => 1,
             'scale' => 0,
             'thousand_separator' => '',
@@ -2500,6 +2519,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
             'prefix_suffix' => 1,
             'scale' => 0,
             'thousand_separator' => '',
@@ -2567,14 +2588,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '19',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '23',
         ),
       ),
@@ -2637,14 +2665,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
           'weight' => '12',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'list_default',
           'weight' => '10',
         ),
@@ -2654,7 +2688,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Client Level',
       'required' => 0,
       'settings' => array(
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -2721,14 +2755,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'user_reference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'user_reference_default',
           'weight' => '3',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'user_reference',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'not assigned',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'user_reference_default',
           'weight' => '4',
         ),
@@ -2786,14 +2826,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '9',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '25',
         ),
       ),
@@ -2855,14 +2902,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '8',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '26',
         ),
       ),
@@ -2922,14 +2976,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '13',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '27',
         ),
       ),
@@ -2989,14 +3050,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '10',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '28',
         ),
       ),
@@ -3056,14 +3124,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '11',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '29',
         ),
       ),
@@ -3123,14 +3198,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '18',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '31',
         ),
       ),
@@ -3190,14 +3272,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '15',
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '33',
         ),
       ),
@@ -3302,14 +3391,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
           'weight' => '5',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry by Admin',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'list_default',
           'weight' => '4',
         ),
@@ -3319,7 +3414,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Company',
       'required' => 0,
       'settings' => array(
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3369,14 +3464,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '15',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '13',
         ),
@@ -3387,7 +3488,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3439,14 +3540,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '17',
         ),
         'full' => array(
           'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'text_default',
           'weight' => '30',
         ),
       ),
@@ -3508,14 +3616,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '3',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '2',
         ),
@@ -3526,7 +3640,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3575,7 +3689,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
           'weight' => '10',
         ),
@@ -3588,7 +3705,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       ),
       'entity_type' => 'user',
       'field_name' => 'field_user_follow_up',
-      'label' => 'Follow-Up',
+      'label' => 'Needs Follow-Up?',
       'required' => 0,
       'settings' => array(
         'user_register_form' => 0,
@@ -3639,25 +3756,31 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'above',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '11',
         ),
         'full' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '10',
         ),
       ),
       'entity_type' => 'user',
       'field_name' => 'field_user_follow_up_notes',
-      'label' => 'Follow-Up Notes',
+      'label' => 'Notes to Record',
       'required' => 0,
       'settings' => array(
         'text_processing' => '1',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3706,14 +3829,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'list_default',
           'weight' => '7',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'list',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'list_default',
           'weight' => '6',
         ),
@@ -3723,7 +3852,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Gender',
       'required' => 0,
       'settings' => array(
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3773,14 +3902,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '8',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '7',
         ),
@@ -3791,7 +3926,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3843,14 +3978,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '4',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '3',
         ),
@@ -3861,7 +4002,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -3902,6 +4043,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'prefix_suffix' => 1,
             'scale' => 0,
             'thousand_separator' => '',
@@ -3911,8 +4054,16 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         ),
         'full' => array(
           'label' => 'inline',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+            'prefix_suffix' => TRUE,
+            'scale' => 0,
+            'thousand_separator' => ' ',
+          ),
+          'type' => 'number_integer',
           'weight' => '22',
         ),
       ),
@@ -3976,6 +4127,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -3989,6 +4142,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4004,11 +4159,11 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Letter Presented',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4017,7 +4172,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -4052,14 +4207,21 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'email',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'email_default',
           'weight' => '14',
         ),
         'full' => array(
           'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
+          'module' => 'email',
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
+          'type' => 'email_default',
           'weight' => '32',
         ),
       ),
@@ -4077,7 +4239,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'size' => '60',
         ),
         'type' => 'email_textfield',
-        'weight' => '17',
+        'weight' => '21',
       ),
     ),
   );
@@ -4113,21 +4275,31 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
     ),
     'field_instance' => array(
       'bundle' => 'user',
-      'default_value' => NULL,
+      'default_value' => array(
+        0 => array(
+          'value' => '<em>needs a coach entry in this field</em>',
+        ),
+      ),
       'deleted' => '0',
       'description' => '',
       'display' => array(
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '6',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry by coach',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '5',
         ),
@@ -4190,14 +4362,20 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'default' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '14',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '12',
         ),
@@ -4208,7 +4386,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4261,6 +4439,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4274,6 +4454,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4289,11 +4471,11 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Separation Date',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4302,7 +4484,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -4335,16 +4517,22 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'email',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'email_default',
           'weight' => '9',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'email',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'email_default',
           'weight' => '7',
         ),
@@ -4354,7 +4542,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Supervisor Email',
       'required' => 0,
       'settings' => array(
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4404,16 +4592,22 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '6',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '5',
         ),
@@ -4421,10 +4615,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'entity_type' => 'user',
       'field_name' => 'field_user_supervisor_name',
       'label' => 'Supervisor Name',
-      'required' => 0,
+      'required' => 1,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4474,16 +4668,22 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '10',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '8',
         ),
@@ -4494,7 +4694,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4544,16 +4744,22 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
+          ),
           'type' => 'text_default',
           'weight' => '8',
         ),
         'full' => array(
           'label' => 'inline',
           'module' => 'text',
-          'settings' => array(),
+          'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
+          ),
           'type' => 'text_default',
           'weight' => '6',
         ),
@@ -4564,7 +4770,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4596,7 +4802,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 'minute',
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -4617,6 +4823,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4630,6 +4838,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => ' ',
+            'empty_fields_handler' => 'EmptyFieldText',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4642,14 +4852,14 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       ),
       'entity_type' => 'user',
       'field_name' => 'field_user_waiver_auth_received',
-      'label' => 'Waiver Authorization Received',
+      'label' => 'Waiver Received',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4658,7 +4868,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -4707,6 +4917,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => '',
+            'empty_fields_handler' => '',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4720,6 +4932,8 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'label' => 'inline',
           'module' => 'date',
           'settings' => array(
+            'empty_fields_emptyfieldtext_empty_text' => 'needs entry by Admin',
+            'empty_fields_handler' => 'EmptyFieldText',
             'format_type' => 'short',
             'fromto' => 'both',
             'multiple_from' => '',
@@ -4735,11 +4949,11 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
       'label' => 'Worksheet Received',
       'required' => 0,
       'settings' => array(
-        'default_value' => 'now',
+        'default_value' => 'blank',
         'default_value2' => 'same',
         'default_value_code' => '',
         'default_value_code2' => '',
-        'user_register_form' => 0,
+        'user_register_form' => 1,
       ),
       'widget' => array(
         'active' => 1,
@@ -4748,7 +4962,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
           'increment' => '15',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
-          'label_position' => 'above',
+          'label_position' => 'none',
           'text_parts' => array(),
           'year_range' => '-3:+3',
         ),
@@ -4762,12 +4976,12 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
   // Included for use with string extractors like potx.
   t('<strong>Click the appropriate button before Saving.</strong>   "Yes-Final" signifies that you have approved this case management report and are submitting it for invoicing. Use "No-Not Final" to create a draft.  Please make sure you finalize your CMRs before the end of every cycle. Once final, CMRs can only be modified by contacting your Case Manager or an Administrator.');
   t('<strong>Code Definitions:</strong>
-A	= Active<br/>
-A-H	= Active-Hold<br/>
 NA = Not Assigned - Administrative Use Only<br/>
 NC = New Client<br/>
 PN = Post Notification<br/>
 PN-A = Post Notification-Active<br/>
+A	= Active<br/>
+A-H	= Active-Hold<br/>
 A-1	= Active-Goal Attained<br/>
 PN-4 = Post Notification-Client Declines Services<br/>
 PN-5 = Post Notification-Reabsorbed<br/>
@@ -4805,11 +5019,10 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
   t('Client ID (Legacy)');
   t('Client Level');
   t('Coach');
-  t('Coaching Fee Amount');
   t('Company');
   t('Computed into Record');
   t('Content');
-  t('Date of Service');
+  t('DATE OF SERVICE');
   t('Department');
   t('Designation');
   t('Education');
@@ -4818,8 +5031,6 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
   t('Fax');
   t('Final');
   t('First Name');
-  t('Follow-Up');
-  t('Follow-Up Notes');
   t('Gender');
   t('Hours');
   t('Inactivation Date');
@@ -4830,6 +5041,9 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
   t('Legacy ID');
   t('Letter Presented');
   t('Membership');
+  t('Needs Follow-Up?');
+  t('Non-Coaching Fee Amount');
+  t('Notes to Record');
   t('PDF Files');
   t('Personal Email');
   t('Phase');
@@ -4850,7 +5064,7 @@ PN-A-1 = Post Notification-Active-Goal Attained in one cycle<br/>
   t('Supervisor Phone');
   t('Supervisor Title');
   t('This flag is used by the system to flag if the CMR has been computed into the Record\'s data');
-  t('Waiver Authorization Received');
+  t('Waiver Received');
   t('Worksheet Received');
 
   return $fields;

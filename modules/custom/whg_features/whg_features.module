@@ -137,72 +137,194 @@ function whg_features_node_access($node, $op, $account) {
  * Implements hook_block_info().
  */
 function whg_features_block_info() {
-  $blocks = array();
+    $blocks = array();
 
-  $blocks['crc_nav_accordion'] = array(
-    'info' => t('WHG CRC Accordion Menu'),
-  );
+    $blocks['crc_nav_accordion'] = array(
+        'info' => t('WHG CRC Accordion Menu'),
+    );
 
-  return $blocks;
+    $blocks['cmr_user_totals'] = array(
+        'info' => t('WHG CMR User Totals'),
+    );
+
+    return $blocks;
 }
 
 /**
  * Implements hook_block_view().
  */
 function whg_features_block_view($delta) {
-  $data = array(
-    'subject' => '',
-    'content' => '',
-  );
-  switch ($delta) {
-    case 'crc_nav_accordion':
-      $data = whg_features_crc_nav_accordion_block();
-      break;
-  }
-  return $data;
+    $data = array(
+        'subject' => '',
+        'content' => '',
+    );
+    switch ($delta) {
+        case 'crc_nav_accordion':
+            $data = whg_features_crc_nav_accordion_block();
+            break;
+
+        case 'cmr_user_totals':
+            $data = whg_features_cmr_user_totals_block();
+            break;
+    }
+    return $data;
 }
 
 /**
  * Custom CRC accordion menu in block.
  */
 function whg_features_crc_nav_accordion_block() {
-  $output = '';
-  $menu = menu_tree_output(menu_tree_page_data('menu-crc-menu', $max_depth = 3));
-  foreach ($menu as $item) {
-    if (isset($item['#title'])) {
-      // If in active trail, set opener open.
-      $active = (isset($item['#attributes']['class']) && in_array('active-trail', $item['#attributes']['class']))
-        ? ' default-open'
-        : null;
-      $open = (isset($active)) ? ' ui-state-active' : null;
-      $output .= '<li><a href="' . drupal_get_path_alias($item['#href']) . '" class="opener' . $open . '"><strong>' . $item['#title'] . '</strong></a>';
-      if (!empty($item['#below'])) {
-        $parameters = drupal_get_query_parameters();
-        // Add auth link if available to each child link.
-        if (isset($parameters['auth'])) {
-          foreach ($item['#below'] as $key => $value) {
-            if (is_numeric($key)) {
-              $item['#below'][$key]['#localized_options'] = array(
-                'query' => array(
-                  'auth' => $parameters['auth'],
-                ),
-              );
-            }
-          }
-        }
-        $output .= '<div class="slide-holder' . $active . '">
+    $output = '';
+    $menu = menu_tree_output(menu_tree_page_data('menu-crc-menu', $max_depth = 3));
+    foreach ($menu as $item) {
+        if (isset($item['#title'])) {
+            // If in active trail, set opener open.
+            $active = (isset($item['#attributes']['class']) && in_array('active-trail', $item['#attributes']['class']))
+              ? ' default-open'
+              : null;
+            $open = (isset($active)) ? ' ui-state-active' : null;
+            $output .= '<li><a href="' . drupal_get_path_alias($item['#href']) . '" class="opener' . $open . '"><strong>' . $item['#title'] . '</strong></a>';
+            if (!empty($item['#below'])) {
+                $parameters = drupal_get_query_parameters();
+                // Add auth link if available to each child link.
+                if (isset($parameters['auth'])) {
+                    foreach ($item['#below'] as $key => $value) {
+                        if (is_numeric($key)) {
+                            $item['#below'][$key]['#localized_options'] = array(
+                                'query' => array(
+                                    'auth' => $parameters['auth'],
+                                ),
+                            );
+                        }
+                    }
+                }
+                $output .= '<div class="slide-holder' . $active . '">
               <div class="slide">';
-        $output .= (!empty($item['#below'])) ? drupal_render($item['#below']) : null;
-        $output .= '</div></div>';
-      }
-      $output .= '</li>';
+                $output .= (!empty($item['#below'])) ? drupal_render($item['#below']) : null;
+                $output .= '</div></div>';
+            }
+            $output .= '</li>';
+        }
     }
-  }
-  $content = '<ul class="accordion">' . $output . '</ul>';
-  $data['subject'] = null;
-  $data['content'] = $content;
-  return $data;
+    $content = '<ul class="accordion">' . $output . '</ul>';
+    $data['subject'] = null;
+    $data['content'] = $content;
+    return $data;
 }
+
+function whg_features_cmr_user_totals_block() {
+    $user = menu_get_object('user');
+    $latest_cmr_nid = whg_features_latest_cmr($user->uid);
+    $latest_cmr = ($latest_cmr_nid) ? node_load($latest_cmr_nid) : false;
+
+    $cmr_fields = array(
+        'field_cmr_service_started' => t('Service Started'),
+        'field_cmr_last_contact' => t('Date of Last Contact'),
+        'field_cmr_inactivation_date' => t('Inactivation Date'),
+        'field_cmr_status_code' => t('Code'),
+        'field_cmr_hours' => t('Total Hours'),
+        'field_cmr_phase' => t('Phase'),
+        'field_cmr_service_fee' => t('Coaching Fees'),
+        'non-coaching_fees' => t('Non-Coaching Fees'),
+        'total_amount' => t('Total Invoiced Amount'),
+        'field_cmr_remarks' => t('Last Remarks'),
+    );
+
+    $calc_fields = array(
+        'field_cmr_hours',
+        'field_cmr_service_fee',
+        'non-coaching_fees',
+        'total_amount',
+    );
+
+    $display_fields = $data = array();
+
+    $display_fields[]['data'] = '<strong>Report Submitted:</strong> ' . format_date($latest_cmr->created, 'short');
+
+    foreach ($cmr_fields as $cmr_field => $display) {
+        if (!in_array($cmr_field, $calc_fields)) {
+            $item = field_view_field('node', $latest_cmr, $cmr_field);
+            if (isset($item['#items'])
+              && is_string($item['#items'][0]['value'])
+              && strpos($item['#items'][0]['value'], '00:00')) {
+                $item = format_date(strtotime($item['#items'][0]['value']), 'short');
+            } else {
+                $item = (isset($item[0]['#markup'])) ? html_entity_decode($item[0]['#markup']) : '';
+            }
+        } else {
+            switch ($cmr_field) {
+                case 'non-coaching_fees':
+                    $item = whg_features_cmr_totals($user->uid, 'field_ncf_coaching_fee_amount', 'non_coaching_fees', 'field_ncf_associated_record');
+                    $item = !empty($item) ? '$' . $item : $item;
+                    break;
+
+                case 'field_cmr_service_fee':
+                case 'total_amount':
+                    $item = whg_features_cmr_totals($user->uid, $cmr_field);
+                    $item = !empty($item) ? '$' . $item : $item;
+                    break;
+
+                default:
+                    $item = whg_features_cmr_totals($user->uid, $cmr_field);
+                    break;
+            }
+        }
+        $display_fields[]['data'] = '<strong>' . $display . ':</strong> ' . $item;
+    }
+
+    $data['content'] = theme('item_list', array('items' => $display_fields));
+    return $data;
+
+}
+
+function whg_features_latest_cmr($uid) {
+    $query = new EntityFieldQuery();
+    $query
+      ->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'cmr')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_cmr_associated_record', 'uid', $uid)
+      ->propertyOrderBy('created', 'DESC')
+      ->range(0, 1);
+    ;
+    $result = $query->execute();
+    if (!empty($result)) {
+        $return = array_keys($result['node']);
+        $return = reset($return);
+    } else {
+        $return = false;
+    }
+
+    return $return;
+}
+
+function whg_features_cmr_totals($uid, $field, $bundle = 'cmr', $condition = 'field_cmr_associated_record') {
+    $query = new EntityFieldQuery();
+    $query
+      ->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', $bundle)
+      ->propertyCondition('status', 1)
+      ->fieldCondition($condition, 'uid', $uid);
+    $result = $query->execute();
+    if (!empty($result)) {
+        $totals = array();
+        foreach ($result['node'] as $nid => $value) {
+            $node = node_load($nid);
+            $item = field_get_items('node', $node, $field);
+            $item = is_array($item) ? reset($item) : $item;
+            $item = isset($item['value']) ? $item['value'] : $item;
+            $totals[] = $item;
+        }
+        $return = array_sum($totals);
+
+    } else {
+        $return = '';
+    }
+
+    return $return;
+
+}
+
 
 /**
  * Implements hook_FORM_ID_form_alter().

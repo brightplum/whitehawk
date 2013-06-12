@@ -2,7 +2,8 @@
     width: 175px;
 }
 
-.view-id-case_management_reports div strong {
+.view-id-case_management_reports div strong,
+#block-whg-features-cmr-user-totals ul li strong {
     display: inline-block;
     width: 175px;
 }

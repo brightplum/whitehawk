@@ -577,7 +577,7 @@ function whg_features_sync_status_codes() {
     $query
       ->entityCondition('entity_type', 'user')
       ->propertyCondition('status', 1)
-      ->entityOrderBy('created', 'DESC');
+      ->propertyOrderBy('created', 'DESC');
     $results = $query->execute();
     $operations = array();
     foreach ($results['user'] as $uid => $value) {

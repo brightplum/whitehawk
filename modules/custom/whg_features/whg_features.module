@@ -81,6 +81,19 @@ function whg_features_permission() {
   );
 }
 
+function whg_features_user_view($account, $view_mode, $langcode) {
+    if ($view_mode == 'full') {
+        $user_totals = whg_features_cmr_user_totals_block();
+        if (!empty($user_totals)) {
+            $account->content['case_management'] = array(
+                '#title' => t('Case Management'),
+                '#markup' => $user_totals['content'],
+                '#weight' => 99,
+            );
+        }
+    }
+}
+
 /**
  * Implements hook_admin_paths().
  *
@@ -272,63 +285,72 @@ function whg_features_cmr_user_totals_block() {
     $user = menu_get_object('user');
     $latest_cmr_nid = whg_features_latest_cmr($user->uid);
     $latest_cmr = ($latest_cmr_nid) ? node_load($latest_cmr_nid) : false;
+    $data = array();
 
-    $cmr_fields = array(
-        'field_cmr_service_started' => t('Service Started'),
-        'field_cmr_last_contact' => t('Date of Last Contact'),
-        'field_cmr_inactivation_date' => t('Inactivation Date'),
-        'field_cmr_status_code' => t('Code'),
-        'field_cmr_hours' => t('Total Hours'),
-        'field_cmr_phase' => t('Phase'),
-        'field_cmr_service_fee' => t('Coaching Fees'),
-        'non-coaching_fees' => t('Non-Coaching Fees'),
-        'total_amount' => t('Total Invoiced Amount'),
-        'field_cmr_remarks' => t('Last Remarks'),
-    );
+    if (is_object($latest_cmr)) {
+        $cmr_fields = array(
+            'field_cmr_service_started' => t('Service Started'),
+            'field_cmr_last_contact' => t('Date of Last Contact'),
+            'field_cmr_inactivation_date' => t('Inactivation Date'),
+            'field_cmr_status_code' => t('Code'),
+            'field_cmr_hours' => t('Total Hours'),
+            'field_cmr_phase' => t('Phase'),
+            'field_cmr_service_fee' => t('Coaching Fees'),
+            'non-coaching_fees' => t('Non-Coaching Fees'),
+            'total_amount' => t('Total Invoiced Amount'),
+            'field_cmr_remarks' => t('Last Remarks'),
+        );
 
-    $calc_fields = array(
-        'field_cmr_hours',
-        'field_cmr_service_fee',
-        'non-coaching_fees',
-        'total_amount',
-    );
+        $calc_fields = array(
+            'field_cmr_hours',
+            'field_cmr_service_fee',
+            'non-coaching_fees',
+            'total_amount',
+        );
 
-    $display_fields = $data = array();
+        $display_fields = array();
 
-    $display_fields[]['data'] = '<strong>Report Submitted:</strong> ' . format_date($latest_cmr->created, 'short');
+        $display_fields[]['data'] = '<strong>Report Submitted:</strong> ' . format_date($latest_cmr->created, 'short');
 
-    foreach ($cmr_fields as $cmr_field => $display) {
-        if (!in_array($cmr_field, $calc_fields)) {
-            $item = field_view_field('node', $latest_cmr, $cmr_field);
-            if (isset($item['#items'])
-              && is_string($item['#items'][0]['value'])
-              && strpos($item['#items'][0]['value'], '00:00')) {
-                $item = format_date(strtotime($item['#items'][0]['value']), 'short');
+        foreach ($cmr_fields as $cmr_field => $display) {
+            if (!in_array($cmr_field, $calc_fields)) {
+                $item = field_view_field('node', $latest_cmr, $cmr_field);
+                if (isset($item['#items'])
+                  && is_string($item['#items'][0]['value'])
+                  && strpos($item['#items'][0]['value'], '00:00')
+                ) {
+                    $item = format_date(strtotime($item['#items'][0]['value']), 'short');
+                } else {
+                    $item = (isset($item[0]['#markup'])) ? html_entity_decode($item[0]['#markup']) : '';
+                }
             } else {
-                $item = (isset($item[0]['#markup'])) ? html_entity_decode($item[0]['#markup']) : '';
-            }
-        } else {
-            switch ($cmr_field) {
-                case 'non-coaching_fees':
-                    $item = whg_features_cmr_totals($user->uid, 'field_ncf_coaching_fee_amount', 'non_coaching_fees', 'field_ncf_associated_record');
-                    $item = !empty($item) ? '$' . $item : $item;
-                    break;
+                switch ($cmr_field) {
+                    case 'non-coaching_fees':
+                        $item = whg_features_cmr_totals(
+                            $user->uid,
+                            'field_ncf_coaching_fee_amount',
+                            'non_coaching_fees',
+                            'field_ncf_associated_record'
+                        );
+                        $item = !empty($item) ? '$' . $item : $item;
+                        break;
 
-                case 'field_cmr_service_fee':
-                case 'total_amount':
-                    $item = whg_features_cmr_totals($user->uid, $cmr_field);
-                    $item = !empty($item) ? '$' . $item : $item;
-                    break;
+                    case 'field_cmr_service_fee':
+                    case 'total_amount':
+                        $item = whg_features_cmr_totals($user->uid, $cmr_field);
+                        $item = !empty($item) ? '$' . $item : $item;
+                        break;
 
-                default:
-                    $item = whg_features_cmr_totals($user->uid, $cmr_field);
-                    break;
+                    default:
+                        $item = whg_features_cmr_totals($user->uid, $cmr_field);
+                        break;
+                }
             }
+            $display_fields[]['data'] = '<strong>' . $display . ':</strong> ' . $item;
         }
-        $display_fields[]['data'] = '<strong>' . $display . ':</strong> ' . $item;
-    }
 
-    $data['content'] = theme('item_list', array('items' => $display_fields));
+        $data['content'] = theme('item_list', array('items' => $display_fields));
+    }
     return $data;
 
 }
@@ -572,6 +594,11 @@ function whg_features_check_bypass() {
   return $key;
 }
 
+/**
+ * Batch operation to sync status codes.
+ *
+ * @return array
+ */
 function whg_features_sync_status_codes() {
     $query = new EntityFieldQuery();
     $query
@@ -591,6 +618,12 @@ function whg_features_sync_status_codes() {
     return $batch;
 }
 
+/**
+ * Batch callback to sync status code.
+ *
+ * @param $uid
+ * @param $context
+ */
 function whg_features_sync_user_status_code($uid, &$context) {
     $cmr_nid = whg_features_latest_cmr($uid);
     if (is_numeric($cmr_nid)) {
@@ -601,11 +634,17 @@ function whg_features_sync_user_status_code($uid, &$context) {
     }
 }
 
+/**
+ * Finished batch callback.
+ *
+ * @param $success
+ * @param $results
+ */
 function whg_features_sync_status_code_finished($success, $results) {
     if ($success) {
         drupal_set_message(t('@count results processed.', array('@count' => count($results))));
     } else {
         $error_operation = reset($operations);
-        drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
+        drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], true))));
     }
 }

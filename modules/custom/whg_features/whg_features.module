@@ -349,7 +349,14 @@ function whg_features_cmr_user_totals_block() {
             $display_fields[]['data'] = '<strong>' . $display . ':</strong> ' . $item;
         }
 
-        $data['content'] = theme('item_list', array('items' => $display_fields));
+        $data['content'] = theme('fieldset', 
+		array(
+			'element' => array(
+				'#title' => 'Case Management',
+				'#value' => theme('item_list', array('items' => $display_fields))
+			),
+		)
+	);
     }
     return $data;
 

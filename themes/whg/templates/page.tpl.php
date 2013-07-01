@@ -75,7 +75,6 @@
         <!-- ***************** - Top Toolbar Right Side - ***************** -->
         <div class="sub-nav2">
           <ul>
-            <li><a href="https://clients.thewhitehawkgroup.com">Coaches</a></li>
             <li><a href="/sitemap">Sitemap</a></li>
           </ul>
         </div><!-- end sub-nav2 -->

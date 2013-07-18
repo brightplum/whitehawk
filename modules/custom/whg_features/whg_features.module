@@ -325,7 +325,12 @@ function whg_features_cmr_user_totals_block() {
 
         foreach ($cmr_fields as $cmr_field => $display) {
             if (!in_array($cmr_field, $calc_fields)) {
-                $item = field_view_field('node', $latest_cmr, $cmr_field);
+                if ($cmr_field == 'field_cmr_service_started') {
+                  $date = whg_features_latest_service_date($user->uid);
+                  $date = isset($date) ? format_date(strtotime($date), 'short') : '';
+                } else {
+                  $item = field_view_field('node', $latest_cmr, $cmr_field);
+                }
                 if (isset($item['#items'])
                   && is_string($item['#items'][0]['value'])
                   && strpos($item['#items'][0]['value'], '00:00')
@@ -357,7 +362,9 @@ function whg_features_cmr_user_totals_block() {
                         break;
                 }
             }
+            $item = (isset($date)) ? $date : $item;
             $display_fields[]['data'] = '<strong>' . $display . ':</strong> ' . $item;
+            unset($date, $item);
         }
 
         $data['content'] = theme('fieldset', 
@@ -386,6 +393,7 @@ function whg_features_latest_cmr($uid) {
       ->entityCondition('bundle', 'cmr')
       ->propertyCondition('status', 1)
       ->fieldCondition('field_cmr_associated_record', 'uid', $uid)
+      ->fieldCondition('field_cmr_final', 'value', 'true')
       ->propertyOrderBy('created', 'DESC')
       ->range(0, 1);
     ;
@@ -398,6 +406,34 @@ function whg_features_latest_cmr($uid) {
     }
 
     return $return;
+}
+
+function whg_features_latest_service_date($uid) {
+    $query = new EntityFieldQuery();
+    $query
+       ->entityCondition('entity_type', 'node')
+       ->entityCondition('bundle', 'cmr')
+       ->propertyCondition('status', 1)
+       ->fieldCondition('field_cmr_associated_record', 'uid', $uid)
+       ->fieldCondition('field_cmr_final', 'value', 'true')
+       ->propertyOrderBy('created', 'DESC');
+    $result = $query->execute();
+    $start_date = null;
+   
+    if (!empty($result)) {
+      $nids = array_keys($result['node']);
+      $nodes = node_load_multiple($nids);
+      foreach ($nodes as $node) {
+        $start_date = field_get_items('node', $node, 'field_cmr_service_started');
+        if (is_array($start_date)) {
+          $start_date = reset($start_date);
+          $start_date = isset($start_date['value']) ? $start_date['value'] : false;
+          break;
+        }
+      }
+    }
+
+    return $start_date;
 }
 
 /**

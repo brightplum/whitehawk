@@ -559,6 +559,19 @@ function whg_features_views_pre_render(&$view) {
             $results = array_values($results);
             $view->result = $results;
             break;
+
+        case 'user_snapshot':
+            $uid = $view->result[0]->uid;
+            $date = whg_features_latest_service_date($uid);
+            $date = (isset($date)) ? format_date(strtotime($date), 'short') : '';
+            $view->result[0]->field_field_cmr_service_started = array(
+                array(
+                    'rendered' => array(
+                        '#markup' => $date,
+                    )
+                )
+            );
+            break;
     }
 }
 

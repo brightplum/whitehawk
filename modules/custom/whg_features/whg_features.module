@@ -182,14 +182,25 @@ function whg_features_node_update($node) {
  * @param $node
  */
 function whg_features_set_user_status_code($node) {
+    // Get the code set on the cmr.
     $code = field_get_items('node', $node, 'field_cmr_status_code');
     $code = is_array($code) ? reset($code) : $code;
     $code = isset($code['value']) ? $code['value'] : false;
+
+    // Get the user id for the cmr.
     $uid = field_get_items('node', $node, 'field_cmr_associated_record');
     $uid = is_array($uid) ? reset($uid) : $uid;
     $uid = isset($code['uid']) ? $uid['uid'] : false;
 
-    if (is_numeric($uid) && $uid != 0) {
+    // Get the final status
+    $final = field_get_items('node', $node, 'field_cmr_final');
+    $final = is_array($final) ? reset($final) : $final;
+    $final = isset($final['value']) ? $final['value'] : false;
+    $final = ($final === 'true') ? true : false;
+    dpm($final);
+
+    // Only change the code if final and uid is exists.
+    if (is_numeric($uid) && ($uid != 0) && $final) {
         $user = user_load($uid);
         $user = entity_metadata_wrapper('user', $user);
         $user->field_cmr_status_code->set($code);

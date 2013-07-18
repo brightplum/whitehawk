@@ -27,6 +27,9 @@ function whg_features_init() {
                 if (!in_array('administrator', $user->roles)) {
                     drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_admin.css');
                 }
+                if (!in_array('Reviewer', $user->roles)) {
+                    drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_dashboard_reviewer.css');
+                }
             }
         }
 
@@ -197,7 +200,6 @@ function whg_features_set_user_status_code($node) {
     $final = is_array($final) ? reset($final) : $final;
     $final = isset($final['value']) ? $final['value'] : false;
     $final = ($final === 'true') ? true : false;
-    dpm($final);
 
     // Only change the code if final and uid is exists.
     if (is_numeric($uid) && ($uid != 0) && $final) {

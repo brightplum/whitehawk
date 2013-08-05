@@ -100,7 +100,8 @@ function whg_features_user_view($account, $view_mode, $langcode) {
     }
 
     // Hide things from regular client users
-    $roles = $account->roles;
+    global $user;
+    $roles = $user->roles;
     if (in_array('Client', $roles)) {
         drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css');
     }
@@ -378,7 +379,7 @@ function whg_features_cmr_user_totals_block() {
             unset($date, $item);
         }
 
-        $data['content'] = theme('fieldset', 
+        $data['content'] = theme('fieldset',
 		array(
 			'element' => array(
 				'#title' => 'Case Management',
@@ -430,7 +431,7 @@ function whg_features_latest_service_date($uid) {
        ->propertyOrderBy('created', 'DESC');
     $result = $query->execute();
     $start_date = null;
-   
+
     if (!empty($result)) {
       $nids = array_keys($result['node']);
       $nodes = node_load_multiple($nids);
@@ -547,7 +548,7 @@ function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_i
         $form['field_user_coach']['#disabled'] = true;
 
         // Hide form fields for non-admins
-        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css'); 
+        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css');
     }
 }
 

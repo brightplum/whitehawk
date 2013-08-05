@@ -84,6 +84,9 @@ function whg_features_permission() {
   );
 }
 
+/**
+ * Implements hook_user_view().
+ */
 function whg_features_user_view($account, $view_mode, $langcode) {
     if ($view_mode == 'full') {
         $user_totals = whg_features_cmr_user_totals_block();
@@ -94,6 +97,12 @@ function whg_features_user_view($account, $view_mode, $langcode) {
                 '#weight' => 99,
             );
         }
+    }
+
+    // Hide things from regular client users
+    $roles = $account->roles;
+    if (in_array('Client', $roles)) {
+        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css');
     }
 }
 
@@ -536,6 +545,9 @@ function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_i
         $form['account']['roles']['#disabled'] = true;
         $form['field_user_client_id']['#disabled'] = true;
         $form['field_user_coach']['#disabled'] = true;
+
+        // Hide form fields for non-admins
+        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css'); 
     }
 }
 

@@ -1,0 +1,14 @@
+#user_user_full_group_a6,
+#user_user_full_group_2,
+.group-5,
+#user_user_full_group_a9,
+.group-user-followup-info,
+#user_user_form_group_user_acct_detail_group,
+#user_user_form_group_user_supervisor_group,
+#user_user_form_group_user_coach_addl_info,
+#user_user_form_group_user_legacy,
+#edit-field-admin-notes,
+#edit-field-cmr-status-code,
+#edit-field-cmr-service-started {
+    display: none;
+}

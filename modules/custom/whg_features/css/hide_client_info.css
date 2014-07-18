@@ -19,5 +19,5 @@
 .group-user-acct-detail-group,
 .field-name-field-user-coach,
 .field-name-field-user-client-id {
-    display: none; !important
+    display: none !important;
 }

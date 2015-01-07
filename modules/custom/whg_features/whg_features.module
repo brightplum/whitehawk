@@ -540,7 +540,10 @@ function whg_features_form_cmr_node_form_alter(&$form, &$form_state) {
  * @param $form_id
  */
 function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-    if (!user_access('administer site configuration')) {
+    // Hide things from regular client users
+    global $user;
+    $roles = $user->roles;
+    if (in_array('Client', $roles)) {
         $form['account']['name']['#disabled'] = true;
         $form['account']['status']['#disabled'] = true;
         $form['account']['roles']['#disabled'] = true;
@@ -548,7 +551,7 @@ function whg_features_form_user_profile_form_alter(&$form, &$form_state, $form_i
         $form['field_user_coach']['#disabled'] = true;
 
         // Hide form fields for non-admins
-        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css');
+        drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css', array('group' => CSS_SYSTEM - 1, 'preprocess' => FALSE));
     }
 }
 

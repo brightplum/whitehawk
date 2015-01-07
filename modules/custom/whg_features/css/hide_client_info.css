@@ -1,6 +1,7 @@
 #user_user_full_group_a6,
 #user_user_full_group_2,
 .group-5,
+.group-a6,
 #user_user_full_group_a9,
 .group-user-followup-info,
 #user_user_form_group_user_acct_detail_group,
@@ -9,6 +10,14 @@
 #user_user_form_group_user_legacy,
 #edit-field-admin-notes,
 #edit-field-cmr-status-code,
-#edit-field-cmr-service-started {
-    display: none;
+#edit-field-cmr-service-started,
+.form-type-password,
+.form-type-password-confirm,
+.group-user-supervisor-group,
+.group-user-coach-addl-info,
+.group-user-legacy,
+.group-user-acct-detail-group,
+.field-name-field-user-coach,
+.field-name-field-user-client-id {
+    display: none !important;
 }

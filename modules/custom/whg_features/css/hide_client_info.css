@@ -16,6 +16,8 @@
 .group-user-legacy,
 .group-user-acct-detail-group,
 .field-name-field-user-coach,
-.field-name-field-user-client-id {
+.field-name-field-user-client-id,
+fieldset.group-a9,
+#user-user-full-group-4 {
     display: none !important;
 }

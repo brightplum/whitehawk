@@ -7,9 +7,9 @@ files[] = plugins/empty_fields_handler_text.inc
 dependencies[] = field
 dependencies[] = field_formatter_settings
 
-; Information added by drupal.org packaging script on 2012-11-14
-version = "7.x-2.0-rc1"
+; Information added by drupal.org packaging script on 2013-09-04
+version = "7.x-2.0"
 core = "7.x"
 project = "empty_fields"
-datestamp = "1352905605"
+datestamp = "1378338689"
 

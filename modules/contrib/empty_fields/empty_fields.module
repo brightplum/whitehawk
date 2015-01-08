@@ -33,13 +33,21 @@ function empty_fields_field_formatter_info_alter(&$info) {
  */
 function empty_fields_load_plugin($instance, $view_mode_settings) {
   static $plugins;
-  $key = $instance['entity_type'] . '-' . $instance['bundle'] . '-' . $instance['field_name'];
+  $field_name = isset($instance['field_name']) ? $instance['field_name'] : 'custom';
+  $entity_type = isset($instance['entity_type']) ? $instance['entity_type'] : 'custom';
+  $bundle = isset($instance['bundle']) ? $instance['bundle'] : 'custom';
+  $key = $entity_type . '-' . $bundle . '-' . $field_name;
+
   if (empty($plugins[$key]) && !empty($view_mode_settings['empty_fields_handler']) && class_exists($view_mode_settings['empty_fields_handler'])) {
     $plugin_type = $view_mode_settings['empty_fields_handler'];
     $plugin = new $plugin_type();
-    foreach ($plugin->defaults() as $field_id => $field) {
+    foreach ($plugin->defaults() as $field_id => $default) {
       $field_name = empty_fields_generate_field_name($field_id, $plugin_type);
       $plugin->options[$field_id] = !empty($view_mode_settings[$field_name]) ? $view_mode_settings[$field_name] : $default;
+    }
+    // Don't cache plugins with missing instance parameters.
+    if ($key == 'custom-custom-custom') {
+      return $plugin;
     }
     $plugins[$key] = $plugin;
   }
@@ -126,7 +134,7 @@ function empty_fields_field_formatter_settings_form_alter(&$settings_form, $cont
   foreach (empty_fields_plugins() as $class_name => $class_settings) {
     $settings_form['empty_fields_handler']['#options'][$class_name] = $class_settings['title'];
     $plugin = new $class_name();
-    foreach ($plugin->form() as $field_id => $field) {
+    foreach ($plugin->form($context) as $field_id => $field) {
       $field_name = empty_fields_generate_field_name($field_id, $class_name);
       $plugin->options[$field_id] = $settings[$field_name];
       $field['#default_value'] = $settings[$field_name];
@@ -157,10 +165,16 @@ function empty_fields_field_attach_view_alter(&$output, $context) {
   }
   $context['entity']->empty_fields_processed = TRUE;
 
-  $view_mode = $context['view_mode'];
   $entity_type = $context['entity_type'];
   $entity = $context['entity'];
-  $language = $context['language'];
+  // Special switch when rendered using field_view_field().
+  if ($context['view_mode'] == '_custom' && isset($context['display'])) {
+    $view_mode = $context['display'];
+  }
+  else {
+    $view_mode = $context['view_mode'];
+  }
+
   list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
   $rendered_elements = element_children($output);
 
@@ -191,6 +205,7 @@ function empty_fields_field_attach_view_alter(&$output, $context) {
     if (in_array($field_name, $rendered_elements)) {
       switch ($field['type']) {
         case 'text':
+        case 'text_long':
         case 'text_with_summary':
         case 'text_summary_or_trimmed':
           foreach (element_children($output[$field_name]) as $delta) {
@@ -213,6 +228,12 @@ function empty_fields_field_attach_view_alter(&$output, $context) {
       $markup = $plugin->react($context);
       // Do not render empty values.
       if (!empty($markup) || drupal_strlen($markup)) {
+        if (empty($context['language'])) {
+          $language = field_language($entity_type, $entity, $field_name);
+        }
+        else {
+          $language = $context['language'];
+        }
         $output[$field_name] = array(
           '#theme' => 'field',
           '#title' => $instance['label'],
@@ -223,6 +244,9 @@ function empty_fields_field_attach_view_alter(&$output, $context) {
           '#bundle' => $bundle,
           '#object' => $entity,
           '#entity_type' => $entity_type,
+          '#view_mode' => $view_mode,
+          '#language' => $language,
+          '#formatter' => $display['type'],
           '#items' => array(
             0 => array('value' => $markup),
           ),

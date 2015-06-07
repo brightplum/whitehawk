@@ -33,3 +33,4 @@ stylesheets[all][] = css/karma-royal-blue.css
 scripts[] = js/karma.js
 scripts[] = js/jquery-1-slider.js
 scripts[] = js/jquery.cycle.all.min.js
+scripts[] = js/testimonial-slider.js

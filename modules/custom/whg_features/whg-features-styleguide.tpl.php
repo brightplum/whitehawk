@@ -481,3 +481,50 @@
     &lt;/ul&gt; <br />
     &lt;/div&gt; <br />
 </code>
+
+<br />
+
+<h3>Testimonial Slider</h3>
+
+<div class="testimonials">
+ <blockquote><p>Thanks so much for fixing my issue so quickly, I would just like to say that your company has provided such amazing customer service/ support to date it has really blown me away (it is very rare in business today)<cite>&ndash;Themeforest Member</cite></p></blockquote>
+ 
+ <blockquote><p>Pretty impressed with the customer service from TrueThemes. I have rarely seen such after purchase customer service. He actually logged into my server , fixed the file and sent me an explanation on how he fixed it. I am glad I made this purchase.If you are looking for a great theme and great after purchase service , you have found the guy right here...<cite>&ndash;Themeforest Member</cite></p></blockquote>
+ 
+ <blockquote><p>Thanks again for helping me, I just want to say your level of attention to your theme buyers on providing tech support has been amazing. From helping me with 3rd party plugins to fixing CSS code in my site, I have never got this amount of support from buying a theme anywhere else, and I've purchased lot of themes in my day. You provide the best level of support, and I really appreciate you helping me with my website.<cite>&ndash;Themeforest Member</cite></p></blockquote>
+ 
+ <blockquote><p>I have downloaded 8 themes from themeforest. This has been the easiest to customize out of them all. I've never turned a website around so fast! I'll be looking for more themes from fivesquared in the future. Thanks!<cite>&ndash;Themeforest Member</cite></p></blockquote>
+ </div>
+
+<code>
+&lt;div class="testimonials"&gt; <br />
+ &lt;blockquote&gt; <br />&lt;p&gt; <br />Thanks so much for fixing my issue so quickly, I would just like to say that your company has provided such amazing customer service/ support to date it has really blown me away (it is very rare in business today)&lt;cite&gt; <br />&ndash;Themeforest Member&lt;/cite&gt; <br />&lt;/p&gt; <br />&lt;/blockquote&gt; <br />
+ 
+ &lt;blockquote&gt; <br />&lt;p&gt; <br />Pretty impressed with the customer service from TrueThemes. I have rarely seen such after purchase customer service. He actually logged into my server , fixed the file and sent me an explanation on how he fixed it. I am glad I made this purchase.If you are looking for a great theme and great after purchase service , you have found the guy right here...&lt;cite&gt; <br />&ndash;Themeforest Member&lt;/cite&gt; <br />&lt;/p&gt; <br />&lt;/blockquote&gt; <br />
+ 
+ &lt;blockquote&gt; <br />&lt;p&gt; <br />Thanks again for helping me, I just want to say your level of attention to your theme buyers on providing tech support has been amazing. From helping me with 3rd party plugins to fixing CSS code in my site, I have never got this amount of support from buying a theme anywhere else, and I've purchased lot of themes in my day. You provide the best level of support, and I really appreciate you helping me with my website.&lt;cite&gt; <br />&ndash;Themeforest Member&lt;/cite&gt; <br />&lt;/p&gt; <br />&lt;/blockquote&gt; <br />
+ 
+ &lt;blockquote&gt; <br />&lt;p&gt; <br />I have downloaded 8 themes from themeforest. This has been the easiest to customize out of them all. I've never turned a website around so fast! I'll be looking for more themes from fivesquared in the future. Thanks!&lt;cite&gt; <br />&ndash;Themeforest Member&lt;/cite&gt; <br />&lt;/p&gt; <br />&lt;/blockquote&gt; <br />
+ &lt;/div&gt;
+</code>
+
+<br />
+<h2>Footer Callouts</h2>
+
+<h3>Footer Callout</h3>
+
+<div id="footer-callout-content">
+	<a href="http://themeforest.net/item/karma-responsive-clean-website-template/234990?ref=TrueThemes" class="footer-callout-link">
+        	<p class="footer-callout-heading">Hi I'm a Global Callout :)</p>
+        	<p class="footer-callout-text">Use me to engage your customers and promote a rewarding call-to-action (or disable me, change my color and more) </p>
+        </a>
+</div>
+
+<code>
+&lt;div id="footer-callout-content"&gt; <br />
+  &lt;a href="http://themeforest.net/item/karma-responsive-clean-website-template/234990?ref=TrueThemes" class="footer-callout-link"&gt; <br />
+     &lt;p class="footer-callout-heading"&gt; <br />Hi I'm a Global Callout :)&lt;/p&gt; <br />
+     &lt;p class="footer-callout-text"&gt; <br />Use me to engage your customers and promote a rewarding call-to-action (or disable me, change my color and more) &lt;/p&gt; <br />
+  &lt;/a&gt; <br />
+&lt;/div&gt;
+</code>

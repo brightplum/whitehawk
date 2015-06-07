@@ -105,6 +105,15 @@ function whg_features_user_view($account, $view_mode, $langcode) {
     if (in_array('Client', $roles)) {
         drupal_add_css(drupal_get_path('module', 'whg_features') . '/css/hide_client_info.css');
     }
+
+    // Show email address
+    $account->content['email_address'] = array(
+	'#prefix' => '<div class="field field-name-email field-label-inline clearfix">',
+    	'#title' => t('Email Address'),
+	'#markup' => '<div class="field-label">Email Address:</div><div class="field-items">' . $account->mail . '</div>',
+	'#weight' => -10,
+	'#suffix' => '</div>',
+    );
 }
 
 /**

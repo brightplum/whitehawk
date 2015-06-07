@@ -11,5 +11,15 @@ TTjquery(window).load(function() {
 	  cleartypeNoBg: true
 
   });
+  TTjquery('.testimonials').flexslider({
+        slideshowSpeed: 80000000,
+        pauseOnHover:   true,
+        randomize:      false,
+        directionNav:   true,
+        animation:      'fade',
+        animationSpeed: 600,
+        controlsContainer: ".testimonials",
+        smoothHeight: true
+});
 });
 //]]>

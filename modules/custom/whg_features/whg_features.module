@@ -212,7 +212,7 @@ function whg_features_set_user_status_code($node) {
     // Get the user id for the cmr.
     $uid = field_get_items('node', $node, 'field_cmr_associated_record');
     $uid = is_array($uid) ? reset($uid) : $uid;
-    $uid = isset($code['uid']) ? $uid['uid'] : false;
+    $uid = isset($uid['uid']) ? $uid['uid'] : false;
 
     // Get the final status
     $final = field_get_items('node', $node, 'field_cmr_final');

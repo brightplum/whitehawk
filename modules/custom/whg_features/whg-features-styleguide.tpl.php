@@ -509,22 +509,16 @@
 </code>
 
 <br />
-<h2>Footer Callouts</h2>
+<h2>Callouts</h2>
 
-<h3>Footer Callout</h3>
+<h3>Callout</h3>
 
-<div id="footer-callout-content">
-	<a href="http://themeforest.net/item/karma-responsive-clean-website-template/234990?ref=TrueThemes" class="footer-callout-link">
-        	<p class="footer-callout-heading">Hi I'm a Global Callout :)</p>
-        	<p class="footer-callout-text">Use me to engage your customers and promote a rewarding call-to-action (or disable me, change my color and more) </p>
-        </a>
+<div class="message_karma_royalblue colored_box">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia facilisis nibh, ut imperdiet massa sagittis id. In hac habitasse platea dictumst. <a href="#">Sample link</a></p>
 </div>
 
 <code>
-&lt;div id="footer-callout-content"&gt; <br />
-  &lt;a href="http://themeforest.net/item/karma-responsive-clean-website-template/234990?ref=TrueThemes" class="footer-callout-link"&gt; <br />
-     &lt;p class="footer-callout-heading"&gt; <br />Hi I'm a Global Callout :)&lt;/p&gt; <br />
-     &lt;p class="footer-callout-text"&gt; <br />Use me to engage your customers and promote a rewarding call-to-action (or disable me, change my color and more) &lt;/p&gt; <br />
-  &lt;/a&gt; <br />
+&lt;div class="message_karma_royalblue colored_box"&gt; <br />
+	&lt;p&gt; <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia facilisis nibh, ut imperdiet massa sagittis id. In hac habitasse platea dictumst. &lt;a href="#"&gt; <br />Sample link&lt;/a&gt; <br />&lt;/p&gt; <br />
 &lt;/div&gt;
 </code>

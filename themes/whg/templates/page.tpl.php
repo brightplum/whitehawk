@@ -67,16 +67,16 @@
         <!-- ***************** - Top Toolbar Left Side - ***************** -->
         <div class="sub-nav">
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="http://thewhitehawkgroup.com">Home</a></li>
+            <!--<li><a href="/contact">Contact</a></li>-->
           </ul></div><!-- end sub-nav -->
         <!-- ***************** - END Top Toolbar Left Side - ***************** -->
 
         <!-- ***************** - Top Toolbar Right Side - ***************** -->
         <div class="sub-nav2">
-          <ul>
+          <!--<ul>
             <li><a href="/sitemap">Sitemap</a></li>
-          </ul>
+          </ul>-->
         </div><!-- end sub-nav2 -->
         <!-- ***************** - END Top Toolbar Right Side - ***************** -->
 
@@ -197,7 +197,7 @@
 
   <div id="footer_bottom">
     <div class="info">
-      <div id="foot_left"><p>Copyright &copy; 2012 The White Hawk Group. All rights reserved.</p>
+      <div id="foot_left"><p>Copyright &copy; 2016 The White Hawk Group. All rights reserved.</p>
       </div><!-- end foot_left -->
 
 
@@ -205,8 +205,8 @@
         <div class="top-footer"><a href="#" class="link-top">top</a></div>
 
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="http://thewhitehawkgroup.com">Home</a></li>
+          <!--<li><a href="/contact">Contact</a></li>-->
         </ul>
       </div><!-- end foot_right -->
     </div><!-- end info -->
